@@ -3,11 +3,11 @@ import { NextResponse } from "next/server";
 export async function GET() {
   // Mock data simulating EulerSwap USDC/WETH pool
   const apyData = [
-    { timestamp: "2025-07-01T00:00:00Z", apy: 5.2 },
-    { timestamp: "2025-07-02T00:00:00Z", apy: 5.5 },
-    { timestamp: "2025-07-03T00:00:00Z", apy: 5.3 },
-    { timestamp: "2025-07-04T00:00:00Z", apy: 5.7 },
-    { timestamp: "2025-07-05T00:00:00Z", apy: 5.4 },
+    { timestamp: "2025-06-28T00:00:00Z", apy: 5.2 },
+    { timestamp: "2025-06-29T00:00:00Z", apy: 5.5 },
+    { timestamp: "2025-06-30T00:00:00Z", apy: 5.3 },
+    { timestamp: "2025-07-01T00:00:00Z", apy: 5.7 },
+    { timestamp: "2025-07-02T00:00:00Z", apy: 5.4 },
   ];
 
   const portfolio = [

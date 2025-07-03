@@ -1,21 +1,18 @@
 import { NextResponse } from "next/server";
+import { getPoolData } from "@/lib/euler";
 
-export async function GET() {
-  // Mock data simulating EulerSwap USDC/WETH pool
-  const apyData = [
-    { timestamp: "2025-06-28T00:00:00Z", apy: 5.2 },
-    { timestamp: "2025-06-29T00:00:00Z", apy: 5.5 },
-    { timestamp: "2025-06-30T00:00:00Z", apy: 5.3 },
-    { timestamp: "2025-07-01T00:00:00Z", apy: 5.7 },
-    { timestamp: "2025-07-02T00:00:00Z", apy: 5.4 },
-  ];
+export async function GET(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const userAddress = searchParams.get("userAddress") || undefined;
 
-  const portfolio = [
-    { token: "USDC", amount: 1000, valueUSD: 1000 },
-    { token: "WETH", amount: 0.5, valueUSD: 1500 },
-  ];
-
-  const ilRisk = 1.25; // Mock impermanent loss risk percentage
-
-  return NextResponse.json({ apyData, portfolio, ilRisk });
+    const data = await getPoolData(userAddress);
+    return NextResponse.json(data);
+  } catch (error) {
+    console.error("API error:", error);
+    return NextResponse.json(
+      { error: "Failed to fetch pool data" },
+      { status: 500 }
+    );
+  }
 }

@@ -14,6 +14,9 @@
     "@emotion/styled": "^11.14.1",
     "@eulerxyz/euler-sdk": "^0.2.16",
     "@neondatabase/serverless": "^1.0.1",
+    "@reown/appkit": "^1.7.12",
+    "@reown/appkit-adapter-wagmi": "^1.7.12",
+    "@tanstack/react-query": "^5.81.5",
     "chart.js": "^4.5.0",
     "chartjs-adapter-date-fns": "^3.0.0",
     "ethers": "^5.8.0",
@@ -23,6 +26,8 @@
     "react": "^19.0.0",
     "react-chartjs-2": "^5.3.0",
     "react-dom": "^19.0.0",
+    "viem": "^2.31.6",
+    "wagmi": "^2.15.6",
     "web3": "^4.16.0"
   },
   "devDependencies": {

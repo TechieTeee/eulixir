@@ -324,13 +324,13 @@ const pipelineTemplates = [
 ];
 
 interface PipelineTemplateProps {
-  onSelectTemplate: (template: any) => void;
+  onSelectTemplate: (template: Record<string, unknown>) => void;
 }
 
 export default function PipelineTemplates({ onSelectTemplate }: PipelineTemplateProps) {
   const toast = useToast();
 
-  const handleUseTemplate = (template: any) => {
+  const handleUseTemplate = (template: Record<string, unknown>) => {
     onSelectTemplate(template);
     toast({
       title: "Template Selected",

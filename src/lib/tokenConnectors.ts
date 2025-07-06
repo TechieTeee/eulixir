@@ -17,8 +17,8 @@ export const PRICE_FEEDS = {
 
 // Subgraph endpoints
 const UNISWAP_V3_SUBGRAPH = 'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3';
-const AAVE_V3_SUBGRAPH = 'https://api.thegraph.com/subgraphs/name/aave/protocol-v3';
-const COMPOUND_V3_SUBGRAPH = 'https://api.thegraph.com/subgraphs/name/graphprotocol/compound-v3';
+// const AAVE_V3_SUBGRAPH = 'https://api.thegraph.com/subgraphs/name/aave/protocol-v3';
+// const COMPOUND_V3_SUBGRAPH = 'https://api.thegraph.com/subgraphs/name/graphprotocol/compound-v3';
 
 interface TokenData {
   token: string;
@@ -357,7 +357,7 @@ export class WBTCConnector {
 
 // Correlation Analysis
 export class TokenCorrelationAnalyzer {
-  async getCorrelationData(tokens: string[], timeframe: string = '24h'): Promise<any> {
+  async getCorrelationData(tokens: string[], timeframe: string = '24h'): Promise<Record<string, unknown>> {
     // Mock correlation matrix
     const correlationMatrix = {
       WETH_USDC: -0.15, // Negative correlation (WETH up, USDC stable)
@@ -392,7 +392,7 @@ export class TokenCorrelationAnalyzer {
     };
   }
 
-  async getArbitrageOpportunities(): Promise<any[]> {
+  async getArbitrageOpportunities(): Promise<Record<string, unknown>[]> {
     // Mock arbitrage opportunities
     return [
       {

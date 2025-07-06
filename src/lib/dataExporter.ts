@@ -1,5 +1,5 @@
 // Data Export System for ETL Pipeline
-import { utils } from 'xlsx';
+import { utils, write } from 'xlsx';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 
@@ -11,16 +11,16 @@ export interface ExportConfig {
     start: string;
     end: string;
   };
-  filters?: Record<string, any>;
+  filters?: Record<string, unknown>;
 }
 
 export interface ExportData {
-  data: any[];
+  data: Record<string, unknown>[];
   metadata?: {
     source: string;
     generatedAt: string;
     totalRecords: number;
-    filters?: Record<string, any>;
+    filters?: Record<string, unknown>;
     description?: string;
   };
 }
@@ -159,7 +159,7 @@ export class DataExporter {
     }
 
     // Generate Excel file
-    const excelBuffer = utils.write(workbook, { bookType: 'xlsx', type: 'array' });
+    const excelBuffer = write(workbook, { bookType: 'xlsx', type: 'array' });
     const blob = new Blob([excelBuffer], { 
       type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8' 
     });
@@ -197,7 +197,7 @@ export class DataExporter {
       const headers = Object.keys(exportData.data[0]);
       const rows = exportData.data.map(item => headers.map(header => item[header]));
 
-      (pdf as any).autoTable({
+      (pdf as unknown as { autoTable: (options: unknown) => void }).autoTable({
         startY: yPosition,
         head: [headers],
         body: rows,
@@ -243,12 +243,12 @@ export class DataExporter {
   }
 
   // Specialized export methods for common data types
-  async exportLPPositions(positions: any[], config?: Partial<ExportConfig>): Promise<ExportResult> {
+  async exportLPPositions(positions: Record<string, unknown>[], config?: Partial<ExportConfig>): Promise<ExportResult> {
     const exportData: ExportData = {
       data: positions.map(pos => ({
         'Position ID': pos.id,
         'Protocol': pos.protocol || pos.poolAddress,
-        'Token Pair': `${pos.token0?.symbol || pos.token0}/${pos.token1?.symbol || pos.token1}`,
+        'Token Pair': `${(pos.token0 as { symbol?: string })?.symbol || pos.token0}/${(pos.token1 as { symbol?: string })?.symbol || pos.token1}`,
         'Liquidity': pos.liquidity,
         'Value USD': pos.valueUSD,
         'Current APY': `${pos.apy}%`,
@@ -273,7 +273,7 @@ export class DataExporter {
     });
   }
 
-  async exportYieldComparison(yieldData: any[], config?: Partial<ExportConfig>): Promise<ExportResult> {
+  async exportYieldComparison(yieldData: Record<string, unknown>[], config?: Partial<ExportConfig>): Promise<ExportResult> {
     const exportData: ExportData = {
       data: yieldData.map(yield_ => ({
         'Protocol': yield_.protocol,
@@ -300,7 +300,7 @@ export class DataExporter {
     });
   }
 
-  async exportILData(ilData: any[], config?: Partial<ExportConfig>): Promise<ExportResult> {
+  async exportILData(ilData: Record<string, unknown>[], config?: Partial<ExportConfig>): Promise<ExportResult> {
     const exportData: ExportData = {
       data: ilData.map(il => ({
         'Position ID': il.positionId,
@@ -327,9 +327,16 @@ export class DataExporter {
     });
   }
 
-  async exportDataQualityReport(report: any, config?: Partial<ExportConfig>): Promise<ExportResult> {
+  async exportDataQualityReport(report: {
+    results: Record<string, unknown>[];
+    dataSource: string;
+    overallScore: number;
+    status: string;
+    passedChecks: number;
+    failedChecks: number;
+  }, config?: Partial<ExportConfig>): Promise<ExportResult> {
     const exportData: ExportData = {
-      data: report.results.map((result: any) => ({
+      data: report.results.map((result: Record<string, unknown>) => ({
         'Rule Name': result.ruleName,
         'Rule ID': result.ruleId,
         'Passed': result.passed ? 'Yes' : 'No',
@@ -376,7 +383,7 @@ export class DataExporter {
   }
 
   // Template-based exports
-  async exportFromTemplate(templateName: string, data: any[], config?: Partial<ExportConfig>): Promise<ExportResult> {
+  async exportFromTemplate(templateName: string, data: Record<string, unknown>[], config?: Partial<ExportConfig>): Promise<ExportResult> {
     switch (templateName) {
       case 'lp-positions':
         return this.exportLPPositions(data, config);
@@ -419,7 +426,7 @@ export const validateExportConfig = (config: ExportConfig): string[] => {
 };
 
 // Utility functions
-export const formatDataForExport = (data: any[], format: string): any[] => {
+export const formatDataForExport = (data: Record<string, unknown>[], format: string): Record<string, unknown>[] => {
   if (format === 'csv' || format === 'xlsx') {
     // Flatten nested objects for tabular formats
     return data.map(item => flattenObject(item));
@@ -428,8 +435,8 @@ export const formatDataForExport = (data: any[], format: string): any[] => {
   return data;
 };
 
-const flattenObject = (obj: any, prefix = ''): any => {
-  const flattened: any = {};
+const flattenObject = (obj: Record<string, unknown>, prefix = ''): Record<string, unknown> => {
+  const flattened: Record<string, unknown> = {};
   
   for (const key in obj) {
     if (obj.hasOwnProperty(key)) {
@@ -437,7 +444,7 @@ const flattenObject = (obj: any, prefix = ''): any => {
       const newKey = prefix ? `${prefix}.${key}` : key;
       
       if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
-        Object.assign(flattened, flattenObject(value, newKey));
+        Object.assign(flattened, flattenObject(value as Record<string, unknown>, newKey));
       } else {
         flattened[newKey] = value;
       }

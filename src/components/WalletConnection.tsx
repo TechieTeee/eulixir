@@ -33,9 +33,9 @@ import {
 // Initialize AppKit
 const appKit = createAppKit({
   adapters: [wagmiAdapter],
-  projectId,
-  networks,
-  defaultNetwork: networks[0],
+  projectId: projectId || '',
+  networks: networks as any,
+  defaultNetwork: networks[0] as any,
   metadata: {
     name: 'Eulixir',
     description: 'Advanced DeFi Analytics Platform',

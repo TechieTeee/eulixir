@@ -261,7 +261,7 @@ export default function LPPositionManager() {
         grid: { color: "rgba(255, 255, 255, 0.1)" },
         ticks: { 
           color: "rgba(255, 255, 255, 0.6)",
-          callback: function(value: any) {
+          callback: function(value: string | number) {
             return value + '%';
           }
         }

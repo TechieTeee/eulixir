@@ -1,5 +1,4 @@
 // Data Quality Checker for ETL Pipeline
-import { ethers } from 'ethers';
 
 export interface DataQualityRule {
   id: string;
@@ -17,7 +16,7 @@ export interface DataQualityResult {
   passed: boolean;
   score: number; // 0-100
   message: string;
-  details?: any;
+  details?: Record<string, unknown>;
   timestamp: string;
   severity: 'low' | 'medium' | 'high' | 'critical';
 }
@@ -130,7 +129,7 @@ export class DataQualityChecker {
     this.alerts = customAlerts || [];
   }
 
-  async runQualityChecks(data: any, dataSource: string): Promise<DataQualityReport> {
+  async runQualityChecks(data: unknown, dataSource: string): Promise<DataQualityReport> {
     const results: DataQualityResult[] = [];
     
     for (const rule of this.rules.filter(r => r.enabled)) {
@@ -175,7 +174,7 @@ export class DataQualityChecker {
     return report;
   }
 
-  private async executeRule(rule: DataQualityRule, data: any): Promise<DataQualityResult> {
+  private async executeRule(rule: DataQualityRule, data: unknown): Promise<DataQualityResult> {
     switch (rule.id) {
       case 'price-range-check':
         return this.checkPriceRange(rule, data);
@@ -186,19 +185,19 @@ export class DataQualityChecker {
       case 'apy-sanity-check':
         return this.checkAPYSanity(rule, data);
       case 'volume-spike-detection':
-        return this.checkVolumeSpikes(rule, data);
+        return this.checkVolumeSpikes(rule);
       case 'duplicate-detection':
-        return this.checkDuplicates(rule, data);
+        return this.checkDuplicates(rule);
       case 'il-validation':
-        return this.checkILValidation(rule, data);
+        return this.checkILValidation(rule);
       case 'correlation-check':
-        return this.checkPriceCorrelation(rule, data);
+        return this.checkPriceCorrelation(rule);
       default:
         throw new Error(`Unknown rule: ${rule.id}`);
     }
   }
 
-  private checkPriceRange(rule: DataQualityRule, data: any): DataQualityResult {
+  private checkPriceRange(rule: DataQualityRule, data: unknown): DataQualityResult {
     const prices = this.extractPrices(data);
     const threshold = rule.threshold || 50;
     
@@ -253,13 +252,13 @@ export class DataQualityChecker {
     };
   }
 
-  private checkDataFreshness(rule: DataQualityRule, data: any): DataQualityResult {
+  private checkDataFreshness(rule: DataQualityRule, data: unknown): DataQualityResult {
     const threshold = (rule.threshold || 300) * 1000; // Convert to milliseconds
     const now = Date.now();
     
     const timestamps = this.extractTimestamps(data);
     let freshData = 0;
-    let totalData = timestamps.length;
+    const totalData = timestamps.length;
 
     for (const timestamp of timestamps) {
       const age = now - new Date(timestamp).getTime();
@@ -283,7 +282,7 @@ export class DataQualityChecker {
     };
   }
 
-  private checkNullValues(rule: DataQualityRule, data: any): DataQualityResult {
+  private checkNullValues(rule: DataQualityRule, data: unknown): DataQualityResult {
     const threshold = rule.threshold || 5;
     const criticalFields = ['price', 'apy', 'liquidity', 'valueUSD'];
     
@@ -306,7 +305,7 @@ export class DataQualityChecker {
     };
   }
 
-  private checkAPYSanity(rule: DataQualityRule, data: any): DataQualityResult {
+  private checkAPYSanity(rule: DataQualityRule, data: unknown): DataQualityResult {
     const maxAPY = rule.threshold || 1000;
     const apyValues = this.extractAPYValues(data);
     
@@ -337,7 +336,7 @@ export class DataQualityChecker {
     };
   }
 
-  private checkVolumeSpikes(rule: DataQualityRule, data: any): DataQualityResult {
+  private checkVolumeSpikes(rule: DataQualityRule): DataQualityResult {
     // This would implement volume spike detection logic
     // For now, return a placeholder
     return {
@@ -351,7 +350,7 @@ export class DataQualityChecker {
     };
   }
 
-  private checkDuplicates(rule: DataQualityRule, data: any): DataQualityResult {
+  private checkDuplicates(rule: DataQualityRule): DataQualityResult {
     // Implementation for duplicate detection
     return {
       ruleId: rule.id,
@@ -364,7 +363,7 @@ export class DataQualityChecker {
     };
   }
 
-  private checkILValidation(rule: DataQualityRule, data: any): DataQualityResult {
+  private checkILValidation(rule: DataQualityRule): DataQualityResult {
     // Implementation for IL validation
     return {
       ruleId: rule.id,
@@ -377,7 +376,7 @@ export class DataQualityChecker {
     };
   }
 
-  private checkPriceCorrelation(rule: DataQualityRule, data: any): DataQualityResult {
+  private checkPriceCorrelation(rule: DataQualityRule): DataQualityResult {
     // Implementation for price correlation checks
     return {
       ruleId: rule.id,
@@ -391,17 +390,19 @@ export class DataQualityChecker {
   }
 
   // Helper methods
-  private extractPrices(data: any): Record<string, number> {
+  private extractPrices(data: unknown): Record<string, number> {
     const prices: Record<string, number> = {};
     
-    if (data.tokenData) {
-      prices[data.tokenData.token] = data.tokenData.price;
-    }
-    
-    if (data.portfolio) {
-      for (const asset of data.portfolio) {
-        if (asset.token && typeof asset.valueUSD === 'number' && typeof asset.amount === 'number') {
-          prices[asset.token] = asset.valueUSD / asset.amount;
+    if (this.isObject(data)) {
+      if (this.isObject(data.tokenData) && typeof data.tokenData.token === 'string' && typeof data.tokenData.price === 'number') {
+        prices[data.tokenData.token] = data.tokenData.price;
+      }
+      
+      if (Array.isArray(data.portfolio)) {
+        for (const asset of data.portfolio) {
+          if (this.isObject(asset) && typeof asset.token === 'string' && typeof asset.valueUSD === 'number' && typeof asset.amount === 'number') {
+            prices[asset.token] = asset.valueUSD / asset.amount;
+          }
         }
       }
     }
@@ -409,29 +410,37 @@ export class DataQualityChecker {
     return prices;
   }
 
-  private extractTimestamps(data: any): string[] {
+  private extractTimestamps(data: unknown): string[] {
     const timestamps: string[] = [];
     
-    if (data.lastUpdated) timestamps.push(data.lastUpdated);
-    if (data.timestamp) timestamps.push(data.timestamp);
-    if (data.metadata?.lastUpdated) timestamps.push(data.metadata.lastUpdated);
-    
-    if (data.apyData) {
-      for (const point of data.apyData) {
-        if (point.timestamp) timestamps.push(point.timestamp);
+    if (this.isObject(data)) {
+      if (typeof data.lastUpdated === 'string') timestamps.push(data.lastUpdated);
+      if (typeof data.timestamp === 'string') timestamps.push(data.timestamp);
+      if (this.isObject(data.metadata) && typeof data.metadata.lastUpdated === 'string') {
+        timestamps.push(data.metadata.lastUpdated);
+      }
+      
+      if (Array.isArray(data.apyData)) {
+        for (const point of data.apyData) {
+          if (this.isObject(point) && typeof point.timestamp === 'string') {
+            timestamps.push(point.timestamp);
+          }
+        }
       }
     }
 
     return timestamps;
   }
 
-  private countNullValues(data: any, fields: string[]): number {
+  private countNullValues(data: unknown, fields: string[]): number {
     let nullCount = 0;
     
-    const checkObject = (obj: any) => {
-      for (const field of fields) {
-        if (obj[field] === null || obj[field] === undefined || obj[field] === '') {
-          nullCount++;
+    const checkObject = (obj: unknown) => {
+      if (this.isObject(obj)) {
+        for (const field of fields) {
+          if (obj[field] === null || obj[field] === undefined || obj[field] === '') {
+            nullCount++;
+          }
         }
       }
     };
@@ -447,13 +456,15 @@ export class DataQualityChecker {
     return nullCount;
   }
 
-  private countTotalValues(data: any, fields: string[]): number {
+  private countTotalValues(data: unknown, fields: string[]): number {
     let totalCount = 0;
     
-    const countObject = (obj: any) => {
-      for (const field of fields) {
-        if (field in obj) {
-          totalCount++;
+    const countObject = (obj: unknown) => {
+      if (this.isObject(obj)) {
+        for (const field of fields) {
+          if (field in obj) {
+            totalCount++;
+          }
         }
       }
     };
@@ -469,13 +480,17 @@ export class DataQualityChecker {
     return totalCount;
   }
 
-  private extractAPYValues(data: any): Record<string, number> {
+  private extractAPYValues(data: unknown): Record<string, number> {
     const apyValues: Record<string, number> = {};
     
-    if (data.apy) apyValues['main'] = data.apy;
-    if (data.apyData) {
-      for (const point of data.apyData) {
-        if (point.apy) apyValues[`point_${Date.parse(point.timestamp)}`] = point.apy;
+    if (this.isObject(data)) {
+      if (typeof data.apy === 'number') apyValues['main'] = data.apy;
+      if (Array.isArray(data.apyData)) {
+        for (const point of data.apyData) {
+          if (this.isObject(point) && typeof point.apy === 'number' && typeof point.timestamp === 'string') {
+            apyValues[`point_${Date.parse(point.timestamp)}`] = point.apy;
+          }
+        }
       }
     }
 
@@ -532,5 +547,10 @@ export class DataQualityChecker {
     
     // Here you would implement actual alert sending logic
     // For now, we'll just log and could add webhook/email integration
+  }
+
+  // Type guard helper
+  private isObject(value: unknown): value is Record<string, unknown> {
+    return typeof value === 'object' && value !== null && !Array.isArray(value);
   }
 }

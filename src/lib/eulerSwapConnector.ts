@@ -2,7 +2,7 @@ import { ethers } from 'ethers';
 import { GraphQLClient } from 'graphql-request';
 
 // EulerSwap specific interfaces
-interface LPPosition {
+interface LPPosition extends Record<string, unknown> {
   id: string;
   poolAddress: string;
   token0: {
@@ -154,7 +154,7 @@ export class EulerSwapConnector {
     try {
       const response = await this.graphClient.request(query, { user: userAddress.toLowerCase() });
       
-      return Promise.all(response.positions.map(async (pos: any) => {
+      return Promise.all(response.positions.map(async (pos: Record<string, unknown>) => {
         const position = await this.enrichPositionData(pos);
         return position;
       }));
@@ -165,10 +165,14 @@ export class EulerSwapConnector {
     }
   }
 
-  private async enrichPositionData(rawPosition: any): Promise<LPPosition> {
+  private async enrichPositionData(rawPosition: Record<string, unknown>): Promise<LPPosition> {
+    // Type assertions for safe property access
+    const pool = rawPosition.pool as { id: string; token0: { id: string }; token1: { id: string } };
+    const transaction = rawPosition.transaction as { timestamp: string };
+    
     // Calculate current token amounts and values
-    const currentPrice0 = await this.getTokenPrice(rawPosition.pool.token0.id);
-    const currentPrice1 = await this.getTokenPrice(rawPosition.pool.token1.id);
+    const currentPrice0 = await this.getTokenPrice(pool.token0.id);
+    const currentPrice1 = await this.getTokenPrice(pool.token1.id);
     
     // Mock calculations for demonstration
     const amount0 = 1000; // Would calculate from liquidity and current price
@@ -178,19 +182,19 @@ export class EulerSwapConnector {
     const entryPrice0 = currentPrice0 * 0.95; // Mock entry price
     const entryPrice1 = currentPrice1 * 0.98;
     
-    const feesEarned0 = parseFloat(rawPosition.collectedFeesToken0 || '0');
-    const feesEarned1 = parseFloat(rawPosition.collectedFeesToken1 || '0');
+    const feesEarned0 = parseFloat(String(rawPosition.collectedFeesToken0 || '0'));
+    const feesEarned1 = parseFloat(String(rawPosition.collectedFeesToken1 || '0'));
     const feesEarnedUSD = feesEarned0 * currentPrice0 + feesEarned1 * currentPrice1;
     
     // Calculate impermanent loss
     const il = this.calculateImpermanentLoss(entryPrice0, entryPrice1, currentPrice0, currentPrice1);
     
     return {
-      id: rawPosition.id,
-      poolAddress: rawPosition.pool.id,
-      token0: rawPosition.pool.token0,
-      token1: rawPosition.pool.token1,
-      liquidity: rawPosition.liquidity,
+      id: String(rawPosition.id),
+      poolAddress: pool.id,
+      token0: { symbol: 'TOKEN0', address: String(pool.token0.id), decimals: 18 },
+      token1: { symbol: 'TOKEN1', address: String(pool.token1.id), decimals: 18 },
+      liquidity: String(rawPosition.liquidity),
       amount0,
       amount1,
       valueUSD,
@@ -206,7 +210,7 @@ export class EulerSwapConnector {
       totalReturn: (valueUSD + feesEarnedUSD) / (amount0 * entryPrice0 + amount1 * entryPrice1) - 1,
       totalReturnUSD: valueUSD + feesEarnedUSD - (amount0 * entryPrice0 + amount1 * entryPrice1),
       apy: 12.5, // Mock APY calculation
-      age: Math.floor((Date.now() - parseInt(rawPosition.transaction.timestamp) * 1000) / (24 * 60 * 60 * 1000)),
+      age: Math.floor((Date.now() - parseInt(transaction.timestamp) * 1000) / (24 * 60 * 60 * 1000)),
       lastUpdate: new Date().toISOString()
     };
   }
@@ -538,4 +542,4 @@ const TOKEN_ADDRESSES = {
   WBTC: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
 };
 
-export { LPPosition, YieldMetrics, ImpermanentLossData, PositionPerformance, HedgingStrategy };
+export type { LPPosition, YieldMetrics, ImpermanentLossData, PositionPerformance, HedgingStrategy };

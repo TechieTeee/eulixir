@@ -630,11 +630,13 @@ const nodeTemplates = {
 };
 
 // Draggable node component
-const DraggableNode = ({ node, isOverlay = false }: { node: { id: string; label: string; type?: string; category: string; description?: string; icon?: React.ReactNode; config?: Record<string, unknown> }, isOverlay?: boolean }) => {
+const DraggableNode = ({ node, isOverlay = false }: { node: { id: string; label: string; type?: string; category: string; description?: string; icon?: React.ReactNode; config?: Record<string, unknown> } | undefined, isOverlay?: boolean }) => {
   const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
-    id: node.id,
+    id: node?.id || '',
     data: node,
   });
+
+  if (!node) return null;
 
   const style = {
     transform: CSS.Translate.toString(transform),
@@ -1032,13 +1034,13 @@ export default function ETLPipelineBuilder() {
     onClose();
   };
 
-  const handleSelectTemplate = (template: { name: string; description: string }) => {
+  const handleSelectTemplate = (template: Record<string, unknown>) => {
     // This would convert the template to actual nodes and edges
     // For now, we'll just show a success message
     setShowTemplates(false);
     toast({
       title: "Template Applied",
-      description: `${template.name} template has been loaded to your canvas`,
+      description: `${String(template.name)} template has been loaded to your canvas`,
       status: "success",
       duration: 3000,
       isClosable: true,

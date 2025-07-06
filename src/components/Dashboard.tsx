@@ -32,7 +32,7 @@ import {
   Legend,
   CategoryScale,
 } from "chart.js";
-import "chartjs-adapter-date-fns"; // For date handling in charts
+import "chartjs-adapter-date-fns";
 
 ChartJS.register(
   LineElement,
@@ -61,7 +61,7 @@ interface PortfolioAsset {
 export default function Dashboard() {
   const [poolData, setPoolData] = useState<PoolData[]>([]);
   const [portfolio, setPortfolio] = useState<PortfolioAsset[]>([]);
-  const [ilRisk, setIlRisk] = useState<number>(0);
+  const [riskScore, setRiskScore] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -78,9 +78,11 @@ export default function Dashboard() {
         }
         
         const data = await res.json();
+        
+        // Set data with proper fallbacks
         setPoolData(data.apyData || []);
         setPortfolio(data.portfolio || []);
-        setIlRisk(data.ilRisk || 0);
+        setRiskScore(data.riskScore || 0);
       } catch (error) {
         console.error("Error fetching pool data:", error);
         setError(error instanceof Error ? error.message : "Failed to fetch data");
@@ -95,7 +97,7 @@ export default function Dashboard() {
   const chartData = {
     datasets: [
       {
-        label: "USDC/WETH Pool APY (%)",
+        label: "Pool APY (%)",
         data: poolData.map((point) => ({
           x: new Date(point.timestamp).getTime(),
           y: point.apy,
@@ -122,6 +124,11 @@ export default function Dashboard() {
         backgroundColor: "rgba(29, 32, 44, 0.9)",
         titleColor: "#FAFAFA",
         bodyColor: "#FAFAFA",
+        callbacks: {
+          label: function(context: any) {
+            return `APY: ${context.parsed.y.toFixed(2)}%`;
+          }
+        }
       },
     },
     scales: {
@@ -148,10 +155,18 @@ export default function Dashboard() {
           color: "#FAFAFA" 
         },
         grid: { color: "rgba(156, 39, 176, 0.2)" },
-        ticks: { color: "#FAFAFA" },
+        ticks: { 
+          color: "#FAFAFA",
+          callback: function(value: any) {
+            return value.toFixed(1) + '%';
+          }
+        },
       },
     },
   } as const;
+
+  // Calculate total portfolio value
+  const totalPortfolioValue = portfolio.reduce((sum, asset) => sum + asset.valueUSD, 0);
 
   if (loading) {
     return (
@@ -202,7 +217,7 @@ export default function Dashboard() {
         >
           <CardBody>
             <Text color="cyan.300" mb={2} fontWeight="bold" fontSize="lg">
-              USDC/WETH Pool APY
+              Pool APY History
             </Text>
             <Box height="300px">
               {poolData.length > 0 ? (
@@ -214,7 +229,7 @@ export default function Dashboard() {
               )}
             </Box>
             <Text color="gray.400" mt={4} fontSize="sm">
-              Real-time yield analytics powered by quantum algorithms
+              {poolData.length > 0 && `Current APY: ${poolData[poolData.length - 1]?.apy.toFixed(2)}%`}
             </Text>
           </CardBody>
         </MotionCard>
@@ -236,31 +251,40 @@ export default function Dashboard() {
               Portfolio Overview
             </Text>
             {portfolio.length > 0 ? (
-              <Table variant="simple" size="sm">
-                <Thead>
-                  <Tr>
-                    <Th color="gray.300" borderColor="gray.600">Token</Th>
-                    <Th color="gray.300" borderColor="gray.600">Amount</Th>
-                    <Th color="gray.300" borderColor="gray.600">Value (USD)</Th>
-                  </Tr>
-                </Thead>
-                <Tbody>
-                  {portfolio.map((asset, index) => (
-                    <Tr key={index}>
-                      <Td color="gray.200" borderColor="gray.600">{asset.token}</Td>
-                      <Td color="gray.200" borderColor="gray.600">{asset.amount.toFixed(2)}</Td>
-                      <Td color="gray.200" borderColor="gray.600">${asset.valueUSD.toFixed(2)}</Td>
+              <>
+                <Table variant="simple" size="sm">
+                  <Thead>
+                    <Tr>
+                      <Th color="gray.300" borderColor="gray.600">Token</Th>
+                      <Th color="gray.300" borderColor="gray.600">Amount</Th>
+                      <Th color="gray.300" borderColor="gray.600">Value (USD)</Th>
                     </Tr>
-                  ))}
-                </Tbody>
-              </Table>
+                  </Thead>
+                  <Tbody>
+                    {portfolio.map((asset, index) => (
+                      <Tr key={index}>
+                        <Td color="gray.200" borderColor="gray.600">{asset.token}</Td>
+                        <Td color="gray.200" borderColor="gray.600">
+                          {asset.amount.toFixed(asset.token === 'USDC' ? 2 : 6)}
+                        </Td>
+                        <Td color="gray.200" borderColor="gray.600">
+                          ${asset.valueUSD.toFixed(2)}
+                        </Td>
+                      </Tr>
+                    ))}
+                  </Tbody>
+                </Table>
+                <Text color="green.300" mt={2} fontWeight="bold" fontSize="sm">
+                  Total Value: ${totalPortfolioValue.toFixed(2)}
+                </Text>
+              </>
             ) : (
               <Center height="200px">
                 <Text color="gray.400">No portfolio data available</Text>
               </Center>
             )}
             <Text color="gray.400" mt={4} fontSize="sm">
-              Deposited Assets
+              Your positions in Euler Finance
             </Text>
           </CardBody>
         </MotionCard>
@@ -279,18 +303,21 @@ export default function Dashboard() {
         >
           <CardBody>
             <Text color="violet.300" mb={2} fontWeight="bold" fontSize="lg">
-              Impermanent Loss Risk
+              Protocol Risk Score
             </Text>
             <Text 
               fontSize="4xl" 
-              color="purple.400" 
+              color={riskScore > 3 ? "red.400" : riskScore > 2 ? "yellow.400" : "green.400"}
               fontWeight="bold"
               textShadow="0 0 10px rgba(147, 51, 234, 0.5)"
             >
-              {ilRisk.toFixed(2)}%
+              {riskScore.toFixed(1)}/5
+            </Text>
+            <Text color="gray.400" mt={2} fontSize="sm">
+              {riskScore <= 2 ? "Low Risk" : riskScore <= 3 ? "Medium Risk" : "High Risk"}
             </Text>
             <Text color="gray.400" mt={4} fontSize="sm">
-              Quantum-calculated IL risk for USDC/WETH pool
+              Based on protocol utilization and market conditions
             </Text>
           </CardBody>
         </MotionCard>

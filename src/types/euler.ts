@@ -12,5 +12,5 @@ export interface PortfolioAsset {
 export interface PoolResponse {
   apyData: PoolData[];
   portfolio: PortfolioAsset[];
-  ilRisk: number;
+  riskScore: number;
 }

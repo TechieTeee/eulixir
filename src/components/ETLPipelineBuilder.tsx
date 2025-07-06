@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   Box,
   VStack,
@@ -13,15 +13,11 @@ import {
   Flex,
   Badge,
   IconButton,
-  useColorModeValue,
   Tabs,
   TabList,
   Tab,
   TabPanels,
   TabPanel,
-  Tooltip,
-  Alert,
-  AlertIcon,
   useToast,
   Modal,
   ModalOverlay,
@@ -46,6 +42,9 @@ import {
   BackgroundVariant,
   NodeTypes,
   MiniMap,
+  Handle,
+  Position,
+  MarkerType,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { DndContext, DragEndEvent, DragOverlay, DragStartEvent } from '@dnd-kit/core';
@@ -59,7 +58,6 @@ import {
   Download, 
   Play, 
   Save, 
-  Plus,
   Settings,
   ArrowRight,
   Zap,
@@ -675,63 +673,102 @@ const DraggableNode = ({ node, isOverlay = false }: { node: any, isOverlay?: boo
 };
 
 // Custom node component for React Flow
-const CustomNode = ({ data, id }: { data: PipelineNodeData, id: string }) => {
-  const statusColor = {
-    idle: 'gray.400',
-    running: 'yellow.400',
-    success: 'green.400',
-    error: 'red.400'
-  };
+const CustomNode = ({ data }: { data: PipelineNodeData }) => {
+  // Determine which handles to show based on node type
+  const showInputHandle = data.type !== 'source';
+  const showOutputHandle = data.type !== 'output';
 
   return (
-    <Card
-      bg="rgba(26, 32, 44, 0.9)"
-      border="2px solid"
-      borderColor="rgba(147, 51, 234, 0.3)"
-      borderRadius="lg"
-      minW="200px"
-      _hover={{ borderColor: "purple.400" }}
-    >
-      <CardHeader pb={2}>
-        <HStack justify="space-between">
-          <HStack>
-            <Box color="purple.400">{data.icon}</Box>
-            <Text fontSize="sm" fontWeight="bold" color="white">
-              {data.label}
-            </Text>
+    <Box position="relative">
+      {/* Input Handle - Left side */}
+      {showInputHandle && (
+        <Handle
+          type="target"
+          position={Position.Left}
+          id="input"
+          style={{
+            background: '#9333EA',
+            border: '2px solid #ffffff',
+            width: '14px',
+            height: '14px',
+            left: '-7px',
+            borderRadius: '50%',
+            boxShadow: '0 0 8px rgba(147, 51, 234, 0.6)',
+            transition: 'all 0.2s ease',
+          }}
+          className="custom-handle"
+        />
+      )}
+      
+      {/* Output Handle - Right side */}
+      {showOutputHandle && (
+        <Handle
+          type="source"
+          position={Position.Right}
+          id="output"
+          style={{
+            background: '#10B981',
+            border: '2px solid #ffffff',
+            width: '14px',
+            height: '14px',
+            right: '-7px',
+            borderRadius: '50%',
+            boxShadow: '0 0 8px rgba(16, 185, 129, 0.6)',
+            transition: 'all 0.2s ease',
+          }}
+          className="custom-handle"
+        />
+      )}
+      
+      <Card
+        bg="rgba(26, 32, 44, 0.9)"
+        border="2px solid"
+        borderColor="rgba(147, 51, 234, 0.3)"
+        borderRadius="lg"
+        minW="200px"
+        _hover={{ borderColor: "purple.400" }}
+      >
+        <CardHeader pb={2}>
+          <HStack justify="space-between">
+            <HStack>
+              <Box color="purple.400">{data.icon}</Box>
+              <Text fontSize="sm" fontWeight="bold" color="white">
+                {data.label}
+              </Text>
+            </HStack>
+            <Badge size="sm" colorScheme={data.status === 'success' ? 'green' : data.status === 'error' ? 'red' : 'gray'}>
+              {data.status || 'idle'}
+            </Badge>
           </HStack>
-          <Badge size="sm" colorScheme={data.status === 'success' ? 'green' : data.status === 'error' ? 'red' : 'gray'}>
-            {data.status || 'idle'}
-          </Badge>
-        </HStack>
-      </CardHeader>
-      <CardBody pt={0}>
-        <Text fontSize="xs" color="gray.400" mb={2}>
-          {data.description}
-        </Text>
-        <HStack justify="space-between">
-          <Badge size="xs" variant="outline" colorScheme="purple">
-            {data.category}
-          </Badge>
-          <HStack spacing={1}>
-            <IconButton
-              size="xs"
-              variant="ghost"
-              aria-label="Edit"
-              icon={<Edit className="w-3 h-3" />}
-              color="gray.400"
-            />
-            <IconButton
-              size="xs"
-              variant="ghost"
-              aria-label="Delete"
-              icon={<Trash2 className="w-3 h-3" />}
-              color="red.400"
-            />
+        </CardHeader>
+        <CardBody pt={0}>
+          <Text fontSize="xs" color="gray.400" mb={2}>
+            {data.description}
+          </Text>
+          <HStack justify="space-between">
+            <Badge size="xs" variant="outline" colorScheme="purple">
+              {data.category}
+            </Badge>
+            <HStack spacing={1}>
+              <IconButton
+                size="xs"
+                variant="ghost"
+                aria-label="Edit"
+                icon={<Edit className="w-3 h-3" />}
+                color="gray.400"
+              />
+              <IconButton
+                size="xs"
+                variant="ghost"
+                aria-label="Delete"
+                icon={<Trash2 className="w-3 h-3" />}
+                color="red.400"
+              />
+            </HStack>
           </HStack>
-        </HStack>
-      </CardBody>
-    </Card>
+        </CardBody>
+      </Card>
+    </Box>
   );
 };
 
@@ -823,6 +860,18 @@ export default function ETLPipelineBuilder() {
           onConnect={onConnect}
           nodeTypes={nodeTypes}
           fitView
+          defaultEdgeOptions={{
+            style: { 
+              stroke: '#9333EA', 
+              strokeWidth: 2,
+            },
+            type: 'smoothstep',
+            animated: true,
+            markerEnd: {
+              type: MarkerType.Arrow,
+              color: '#9333EA',
+            },
+          }}
           style={{
             backgroundColor: 'transparent',
           }}
@@ -1180,4 +1229,23 @@ export default function ETLPipelineBuilder() {
       </Modal>
     </DndContext>
   );
+}
+
+// Add custom CSS for handle hover effects
+const handleStyles = `
+  .custom-handle:hover {
+    transform: scale(1.2) !important;
+    box-shadow: 0 0 12px rgba(147, 51, 234, 0.8) !important;
+  }
+  
+  .react-flow__handle.custom-handle {
+    transition: all 0.2s ease !important;
+  }
+`;
+
+// Inject styles
+if (typeof document !== 'undefined') {
+  const styleElement = document.createElement('style');
+  styleElement.textContent = handleStyles;
+  document.head.appendChild(styleElement);
 }

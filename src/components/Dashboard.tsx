@@ -402,6 +402,14 @@ export default function Dashboard() {
           
           <HStack spacing={4}>
             <Button
+              onClick={() => router.push('/positions')}
+              colorScheme="green"
+              variant="outline"
+              size="sm"
+            >
+              LP Manager
+            </Button>
+            <Button
               onClick={() => router.push('/pipeline')}
               colorScheme="blue"
               variant="outline"

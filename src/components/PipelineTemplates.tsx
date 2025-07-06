@@ -226,6 +226,100 @@ const pipelineTemplates = [
       { type: 'output', name: 'Arbitrage Alerts' },
       { type: 'output', name: 'Trading Dashboard' }
     ]
+  },
+  {
+    id: 'eulerswap-position-tracker',
+    name: 'EulerSwap Position Tracker',
+    description: 'Comprehensive tracking of EulerSwap LP positions',
+    icon: PieChart,
+    category: 'EulerSwap',
+    difficulty: 'Beginner',
+    estimatedTime: '8 min',
+    useCase: 'Monitor all EulerSwap LP positions, yields, and performance metrics',
+    nodes: [
+      { type: 'source', name: 'EulerSwap LP Positions' },
+      { type: 'source', name: 'LP Yield Tracker' },
+      { type: 'transform', name: 'LP Performance Calculator' },
+      { type: 'transform', name: 'Yield Optimizer' },
+      { type: 'output', name: 'LP Position Dashboard' },
+      { type: 'output', name: 'Performance Report' }
+    ]
+  },
+  {
+    id: 'il-protection-system',
+    name: 'Impermanent Loss Protection',
+    description: 'Advanced IL monitoring and hedging system',
+    icon: AlertTriangle,
+    category: 'Risk Management',
+    difficulty: 'Advanced',
+    estimatedTime: '20 min',
+    useCase: 'Monitor IL exposure and implement automated hedging strategies',
+    nodes: [
+      { type: 'source', name: 'EulerSwap LP Positions' },
+      { type: 'source', name: 'IL Monitor' },
+      { type: 'transform', name: 'IL Calculator' },
+      { type: 'transform', name: 'Hedging Strategy Engine' },
+      { type: 'output', name: 'IL Alert System' },
+      { type: 'output', name: 'Hedging Recommendations' }
+    ]
+  },
+  {
+    id: 'yield-maximizer',
+    name: 'LP Yield Maximizer',
+    description: 'Optimize LP strategies for maximum yield',
+    icon: TrendingUp,
+    category: 'Strategy',
+    difficulty: 'Intermediate',
+    estimatedTime: '15 min',
+    useCase: 'Compare yields across protocols and optimize LP position strategies',
+    nodes: [
+      { type: 'source', name: 'EulerSwap LP Positions' },
+      { type: 'source', name: 'Uniswap V3 Pools' },
+      { type: 'source', name: 'LP Yield Tracker' },
+      { type: 'transform', name: 'Yield Optimizer' },
+      { type: 'transform', name: 'Position Rebalancer' },
+      { type: 'output', name: 'Yield Comparison Table' },
+      { type: 'output', name: 'Rebalancing Alerts' }
+    ]
+  },
+  {
+    id: 'lp-risk-analyzer',
+    name: 'LP Risk Analyzer',
+    description: 'Comprehensive risk analysis for LP positions',
+    icon: Activity,
+    category: 'Risk Management',
+    difficulty: 'Intermediate',
+    estimatedTime: '12 min',
+    useCase: 'Analyze all risks associated with LP positions including IL, smart contract, and market risks',
+    nodes: [
+      { type: 'source', name: 'EulerSwap LP Positions' },
+      { type: 'source', name: 'IL Monitor' },
+      { type: 'transform', name: 'Risk Metrics' },
+      { type: 'transform', name: 'IL Calculator' },
+      { type: 'output', name: 'Risk Dashboard' },
+      { type: 'output', name: 'Risk Alert System' }
+    ]
+  },
+  {
+    id: 'automated-lp-manager',
+    name: 'Automated LP Manager',
+    description: 'Fully automated LP position management system',
+    icon: BarChart3,
+    category: 'Automation',
+    difficulty: 'Advanced',
+    estimatedTime: '25 min',
+    useCase: 'Automate LP position management with rebalancing, yield optimization, and risk management',
+    nodes: [
+      { type: 'source', name: 'EulerSwap LP Positions' },
+      { type: 'source', name: 'LP Yield Tracker' },
+      { type: 'source', name: 'IL Monitor' },
+      { type: 'transform', name: 'Yield Optimizer' },
+      { type: 'transform', name: 'Position Rebalancer' },
+      { type: 'transform', name: 'Hedging Strategy Engine' },
+      { type: 'output', name: 'LP Dashboard' },
+      { type: 'output', name: 'Automation Alerts' },
+      { type: 'output', name: 'Performance Report' }
+    ]
   }
 ];
 

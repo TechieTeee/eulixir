@@ -154,7 +154,7 @@ export class EulerSwapConnector {
     try {
       const response = await this.graphClient.request(query, { user: userAddress.toLowerCase() });
       
-      return Promise.all(response.positions.map(async (pos: Record<string, unknown>) => {
+      return Promise.all((response as { positions: Record<string, unknown>[] }).positions.map(async (pos: Record<string, unknown>) => {
         const position = await this.enrichPositionData(pos);
         return position;
       }));

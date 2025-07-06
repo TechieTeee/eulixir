@@ -34,7 +34,9 @@ import {
 const appKit = createAppKit({
   adapters: [wagmiAdapter],
   projectId: projectId || '',
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   networks: networks as any,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   defaultNetwork: networks[0] as any,
   metadata: {
     name: 'Eulixir',

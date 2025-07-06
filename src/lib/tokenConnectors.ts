@@ -84,7 +84,10 @@ export class WETHConnector {
       
       return {
         ...basicData,
-        ...wethSpecificData
+        ethPremium: wethSpecificData.ethPremium || 0,
+        unwrapVolume: wethSpecificData.unwrapVolume || 0,
+        gasEfficiency: wethSpecificData.gasEfficiency || 0,
+        dexArbitrageOpportunities: wethSpecificData.dexArbitrageOpportunities || 0
       };
     } catch (error) {
       console.error('Error fetching WETH data:', error);
@@ -187,7 +190,11 @@ export class USDCConnector {
       
       return {
         ...basicData,
-        ...usdcSpecificData
+        supplyGrowth: usdcSpecificData.supplyGrowth || 0,
+        depegRisk: usdcSpecificData.depegRisk || 0,
+        circulation: usdcSpecificData.circulation || 0,
+        yieldSpread: usdcSpecificData.yieldSpread || 0,
+        topYieldProtocol: usdcSpecificData.topYieldProtocol || 'Unknown'
       };
     } catch (error) {
       console.error('Error fetching USDC data:', error);
@@ -278,7 +285,11 @@ export class WBTCConnector {
       
       return {
         ...basicData,
-        ...wbtcSpecificData
+        backingRatio: wbtcSpecificData.backingRatio || 0,
+        mintBurnActivity: wbtcSpecificData.mintBurnActivity || 0,
+        custodianHealth: wbtcSpecificData.custodianHealth || 0,
+        btcPremium: wbtcSpecificData.btcPremium || 0,
+        custodians: wbtcSpecificData.custodians || []
       };
     } catch (error) {
       console.error('Error fetching WBTC data:', error);
@@ -357,7 +368,7 @@ export class WBTCConnector {
 
 // Correlation Analysis
 export class TokenCorrelationAnalyzer {
-  async getCorrelationData(tokens: string[], timeframe: string = '24h'): Promise<Record<string, unknown>> {
+  async getCorrelationData(_tokens: string[], timeframe: string = '24h'): Promise<Record<string, unknown>> {
     // Mock correlation matrix
     const correlationMatrix = {
       WETH_USDC: -0.15, // Negative correlation (WETH up, USDC stable)

@@ -145,20 +145,24 @@ const theme = extendTheme({
         gold: {
           bg: 'gold.500',
           color: 'void.500',
-          _hover: { bg: 'gold.400' },
+          _hover: { 
+            bg: 'gold.400',
+            boxShadow: '0 0 20px rgba(255, 202, 40, 0.5)'
+          },
           fontWeight: 'semibold',
           borderRadius: 'lg',
           boxShadow: '0 0 15px rgba(255, 202, 40, 0.3)',
-          _hover: { boxShadow: '0 0 20px rgba(255, 202, 40, 0.5)' },
         },
         mystic: {
           bgGradient: 'linear(to-r, mystic.600, violet.600)',
           color: 'platinum.100',
-          _hover: { bgGradient: 'linear(to-r, mystic.500, violet.500)' },
+          _hover: { 
+            bgGradient: 'linear(to-r, mystic.500, violet.500)',
+            boxShadow: '0 0 20px rgba(156, 39, 176, 0.5)'
+          },
           fontWeight: 'semibold',
           borderRadius: 'lg',
           boxShadow: '0 0 15px rgba(156, 39, 176, 0.3)',
-          _hover: { boxShadow: '0 0 20px rgba(156, 39, 176, 0.5)' },
         },
       },
     },
@@ -253,11 +257,6 @@ const theme = extendTheme({
         },
       },
     },
-  },
-  fonts: {
-    heading: 'Futura, sans-serif',
-    body: 'Montserrat, sans-serif',
-    mono: 'Fira Code, monospace',
   },
   styles: {
     global: {

@@ -125,7 +125,7 @@ export default function Dashboard() {
         titleColor: "#FAFAFA",
         bodyColor: "#FAFAFA",
         callbacks: {
-          label: function(context: any) {
+          label: function(context: { parsed: { y: number } }) {
             return `APY: ${context.parsed.y.toFixed(2)}%`;
           }
         }
@@ -157,8 +157,8 @@ export default function Dashboard() {
         grid: { color: "rgba(156, 39, 176, 0.2)" },
         ticks: { 
           color: "#FAFAFA",
-          callback: function(value: any) {
-            return value.toFixed(1) + '%';
+          callback: function(value: string | number) {
+            return Number(value).toFixed(1) + '%';
           }
         },
       },

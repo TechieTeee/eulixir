@@ -38,6 +38,7 @@ import {
 } from "@chakra-ui/react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Line, Doughnut, Bar } from "react-chartjs-2";
+import { useRouter } from "next/navigation";
 import {
   Chart as ChartJS,
   LineElement,
@@ -144,6 +145,7 @@ export default function Dashboard() {
   const [error, setError] = useState<string | null>(null);
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const [selectedTimeframe, setSelectedTimeframe] = useState<string>('7d');
+  const router = useRouter();
 
   // Fetch data from API
   const fetchData = async (showRefresh = false) => {
@@ -399,6 +401,14 @@ export default function Dashboard() {
           </VStack>
           
           <HStack spacing={4}>
+            <Button
+              onClick={() => router.push('/pipeline')}
+              colorScheme="blue"
+              variant="outline"
+              size="sm"
+            >
+              ETL Pipeline Builder
+            </Button>
             <Button
               onClick={() => fetchData(true)}
               isLoading={refreshing}

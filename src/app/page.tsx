@@ -44,81 +44,101 @@ export default function Home() {
         {[...Array(20)].map((_, i) => (
           <MotionBox
             key={`purple-${i}`}
-            w="8px"
-            h="8px"
+            w="3px"
+            h="3px"
             bg="mystic.400"
-            borderRadius="full"
-            opacity={0.7}
-            position="absolute"
-            left={`${Math.random() * 100}%`}
-            top={`${Math.random() * 100}%`}
-            animate={{ scale: [1, 1.5, 1], opacity: [0.7, 1, 0.7] }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              delay: Math.random() * 4,
-            }}
-            boxShadow="0 0 15px rgba(168, 85, 247, 0.6)"
-          />
-        ))}
-        {[...Array(15)].map((_, i) => (
-          <MotionBox
-            key={`blue-${i}`}
-            w="6px"
-            h="6px"
-            bg="azure.400"
-            borderRadius="full"
-            opacity={0.6}
-            position="absolute"
-            left={`${Math.random() * 100}%`}
-            top={`${Math.random() * 100}%`}
-            animate={{ y: [0, -10, 0], opacity: [0.6, 1, 0.6] }}
-            transition={{
-              duration: 1.5,
-              repeat: Infinity,
-              delay: Math.random() * 3,
-            }}
-            boxShadow="0 0 12px rgba(59, 130, 246, 0.5)"
-          />
-        ))}
-        {[...Array(12)].map((_, i) => (
-          <MotionBox
-            key={`gold-${i}`}
-            w="12px"
-            h="12px"
-            bg="gold.400"
             borderRadius="full"
             opacity={0.8}
             position="absolute"
             left={`${Math.random() * 100}%`}
             top={`${Math.random() * 100}%`}
-            animate={{ scale: [1, 0, 1], opacity: [0.8, 0, 0.8] }}
+            animate={{ 
+              scale: [0.5, 1.2, 0.5], 
+              opacity: [0.3, 1, 0.3],
+              rotate: [0, 180, 360]
+            }}
             transition={{
               duration: 3,
               repeat: Infinity,
+              delay: Math.random() * 4,
+            }}
+            boxShadow="0 0 8px rgba(168, 85, 247, 0.8)"
+            clipPath="polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)"
+          />
+        ))}
+        {[...Array(15)].map((_, i) => (
+          <MotionBox
+            key={`blue-${i}`}
+            w="2px"
+            h="2px"
+            bg="azure.400"
+            borderRadius="full"
+            opacity={0.7}
+            position="absolute"
+            left={`${Math.random() * 100}%`}
+            top={`${Math.random() * 100}%`}
+            animate={{ 
+              y: [0, -15, 0], 
+              opacity: [0.4, 1, 0.4],
+              scale: [0.8, 1.5, 0.8]
+            }}
+            transition={{
+              duration: 2.5,
+              repeat: Infinity,
+              delay: Math.random() * 3,
+            }}
+            boxShadow="0 0 6px rgba(59, 130, 246, 0.7)"
+            clipPath="polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)"
+          />
+        ))}
+        {[...Array(12)].map((_, i) => (
+          <MotionBox
+            key={`gold-${i}`}
+            w="4px"
+            h="4px"
+            bg="gold.400"
+            borderRadius="full"
+            opacity={0.9}
+            position="absolute"
+            left={`${Math.random() * 100}%`}
+            top={`${Math.random() * 100}%`}
+            animate={{ 
+              scale: [0.3, 1.8, 0.3], 
+              opacity: [0.3, 1, 0.3],
+              rotate: [0, 360, 720]
+            }}
+            transition={{
+              duration: 4,
+              repeat: Infinity,
               delay: Math.random() * 5,
             }}
-            boxShadow="0 0 18px rgba(251, 191, 36, 0.7)"
+            boxShadow="0 0 10px rgba(251, 191, 36, 0.9)"
+            clipPath="polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)"
           />
         ))}
         {[...Array(10)].map((_, i) => (
           <MotionBox
             key={`cyan-${i}`}
-            w="4px"
-            h="4px"
+            w="2.5px"
+            h="2.5px"
             bg="cyan.400"
             borderRadius="full"
-            opacity={0.75}
+            opacity={0.8}
             position="absolute"
             left={`${Math.random() * 100}%`}
             top={`${Math.random() * 100}%`}
-            animate={{ scale: [1, 1.5, 1], opacity: [0.75, 1, 0.75] }}
+            animate={{ 
+              scale: [0.6, 1.4, 0.6], 
+              opacity: [0.4, 1, 0.4],
+              x: [0, 5, -5, 0]
+            }}
             transition={{
-              duration: 4,
+              duration: 3.5,
               repeat: Infinity,
               delay: Math.random() * 6,
             }}
-            boxShadow="0 0 10px rgba(34, 211, 238, 0.6)"
+            boxShadow="0 0 8px rgba(34, 211, 238, 0.8)"
+            clipPath="polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)"
           />
         ))}
       </Box>
@@ -243,7 +263,7 @@ export default function Home() {
             borderColor="gold.500"
             backdropFilter="blur(8px)"
             _hover={{ borderColor: "gold.400" }}
-            h={80}
+            minH={96}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
@@ -292,7 +312,7 @@ export default function Home() {
             borderColor="azure.500"
             backdropFilter="blur(8px)"
             _hover={{ borderColor: "azure.400" }}
-            h={80}
+            minH={96}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
@@ -341,7 +361,7 @@ export default function Home() {
             borderColor="mystic.500"
             backdropFilter="blur(8px)"
             _hover={{ borderColor: "mystic.400" }}
-            h={80}
+            minH={96}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}

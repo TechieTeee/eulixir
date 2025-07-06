@@ -64,8 +64,8 @@ interface HistoricalQueryResponse {
 }
 
 const SUBGRAPH_URL = process.env.NEXT_PUBLIC_EULER_SUBGRAPH_URL || 'https://api.goldsky.com/api/public/project_clm0q3e5p03g101ic3u4r6c4e/subgraphs/euler-mainnet/stable/gn';
-const RPC_URL = `https://eth-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`;
-const SEPOLIA_RPC_URL = `https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY}`;
+const RPC_URL = process.env.NEXT_PUBLIC_RPC_URL || `https://eth-mainnet.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY || ''}`;
+const SEPOLIA_RPC_URL = process.env.NEXT_PUBLIC_RPC_URL || `https://eth-sepolia.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_API_KEY || ''}`;
 const USDC_ADDRESS = '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48';
 const WETH_ADDRESS = '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2';
 const CHAINLINK_ETH_USD = '0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419';
@@ -214,12 +214,14 @@ export async function getEulerData(userAddress?: string): Promise<PoolResponse> 
     // Get ETH price from Chainlink or use fallback
     let wethPriceUSD = 2450; // Fallback price
     try {
-      const provider = new ethers.providers.JsonRpcProvider(currentRpcUrl);
-      const chainlink = new ethers.Contract(CHAINLINK_ETH_USD, CHAINLINK_ABI, provider);
-      const [, ethPrice] = await chainlink.latestRoundData();
-      wethPriceUSD = Number(ethers.utils.formatUnits(ethPrice, 8));
+      if (currentRpcUrl && currentRpcUrl.includes('http')) {
+        const provider = new ethers.providers.JsonRpcProvider(currentRpcUrl);
+        const chainlink = new ethers.Contract(CHAINLINK_ETH_USD, CHAINLINK_ABI, provider);
+        const [, ethPrice] = await chainlink.latestRoundData();
+        wethPriceUSD = Number(ethers.utils.formatUnits(ethPrice, 8));
+      }
     } catch (priceError) {
-      console.warn('Could not fetch ETH price from Chainlink, using fallback');
+      console.warn('Could not fetch ETH price from Chainlink, using fallback:', priceError);
     }
 
     // Calculate APY data from available markets
@@ -367,7 +369,7 @@ export async function getEulerData(userAddress?: string): Promise<PoolResponse> 
     // Return enhanced mock data that's more realistic
     return {
       ...MOCK_POOL_DATA,
-      apyData: MOCK_POOL_DATA.apyData.map((point, index) => ({
+      apyData: MOCK_POOL_DATA.apyData.map((point) => ({
         ...point,
         apy: 4.5 + (Math.random() - 0.5) * 0.8 // 4.1 - 4.9% range
       }))

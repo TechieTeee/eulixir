@@ -39,6 +39,8 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import { Line, Doughnut, Bar } from "react-chartjs-2";
 import { useRouter } from "next/navigation";
+import WalletConnection from './WalletConnection';
+import { useAccount } from 'wagmi';
 import {
   Chart as ChartJS,
   LineElement,
@@ -146,6 +148,7 @@ export default function Dashboard() {
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const [selectedTimeframe, setSelectedTimeframe] = useState<string>('7d');
   const router = useRouter();
+  const { address, isConnected } = useAccount();
 
   // Fetch data from API
   const fetchData = async (showRefresh = false) => {
@@ -154,7 +157,8 @@ export default function Dashboard() {
       else setLoading(true);
       
       setError(null);
-      const res = await fetch("/api/pool");
+      const url = address ? `/api/pool?userAddress=${address}` : "/api/pool";
+      const res = await fetch(url);
       
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`);
@@ -430,6 +434,7 @@ export default function Dashboard() {
             <Badge colorScheme="green" variant="subtle" px={3} py={1}>
               Live
             </Badge>
+            <WalletConnection compact showBalance={false} />
           </HStack>
         </Flex>
 

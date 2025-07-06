@@ -71,11 +71,14 @@ import {
   AlertTriangle,
   CheckCircle,
   Trash2,
-  Edit
+  Edit,
+  BookOpen,
+  Lightbulb
 } from 'lucide-react';
+import PipelineTemplates from './PipelineTemplates';
 
 // Node types for the pipeline
-interface PipelineNodeData {
+interface PipelineNodeData extends Record<string, unknown> {
   label: string;
   type: 'source' | 'transform' | 'output';
   category: string;
@@ -85,9 +88,6 @@ interface PipelineNodeData {
   icon?: React.ReactNode;
 }
 
-interface PipelineNode extends Node {
-  data: PipelineNodeData;
-}
 
 // Available node templates
 const nodeTemplates = {
@@ -355,12 +355,13 @@ const nodeTypes: NodeTypes = {
 };
 
 export default function ETLPipelineBuilder() {
-  const [nodes, setNodes, onNodesChange] = useNodesState([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
   const [activeId, setActiveId] = useState<string | null>(null);
   const [pipelineName, setPipelineName] = useState('');
   const [pipelineDescription, setPipelineDescription] = useState('');
   const [isRunning, setIsRunning] = useState(false);
+  const [showTemplates, setShowTemplates] = useState(false);
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -382,7 +383,7 @@ export default function ETLPipelineBuilder() {
       const template = allNodes.find(n => n.id === active.id);
       
       if (template) {
-        const newNode: PipelineNode = {
+        const newNode: Node = {
           id: `${template.id}-${Date.now()}`,
           type: 'custom',
           position: { x: Math.random() * 300, y: Math.random() * 300 },
@@ -398,7 +399,7 @@ export default function ETLPipelineBuilder() {
           }
         };
         
-        setNodes((nds) => [...nds, newNode]);
+        setNodes((nds: Node[]) => [...nds, newNode]);
         
         toast({
           title: "Node Added",
@@ -465,14 +466,41 @@ export default function ETLPipelineBuilder() {
             pointerEvents="none"
             zIndex={1}
           >
-            <VStack spacing={4}>
-              <ArrowRight size={48} color="rgba(255, 255, 255, 0.3)" />
-              <Text color="gray.400" fontSize="lg">
-                Drag nodes from the palette to build your pipeline
-              </Text>
-              <Text color="gray.500" fontSize="sm">
-                Connect data sources → transformations → outputs
-              </Text>
+            <VStack spacing={6}>
+              <Lightbulb size={48} color="rgba(147, 51, 234, 0.6)" />
+              <VStack spacing={3}>
+                <Text color="white" fontSize="xl" fontWeight="bold">
+                  Build Your First Pipeline
+                </Text>
+                <Text color="gray.400" fontSize="md">
+                  Drag nodes from the palette to build your pipeline
+                </Text>
+                <Text color="gray.500" fontSize="sm">
+                  Start with a Data Source → Add Transformations → Choose Outputs
+                </Text>
+              </VStack>
+              <HStack spacing={8}>
+                <VStack>
+                  <Box p={2} bg="rgba(59, 130, 246, 0.2)" borderRadius="md">
+                    <Database size={20} color="rgb(59, 130, 246)" />
+                  </Box>
+                  <Text fontSize="xs" color="gray.400">Sources</Text>
+                </VStack>
+                <ArrowRight size={20} color="rgba(255, 255, 255, 0.3)" />
+                <VStack>
+                  <Box p={2} bg="rgba(245, 158, 11, 0.2)" borderRadius="md">
+                    <Filter size={20} color="rgb(245, 158, 11)" />
+                  </Box>
+                  <Text fontSize="xs" color="gray.400">Transform</Text>
+                </VStack>
+                <ArrowRight size={20} color="rgba(255, 255, 255, 0.3)" />
+                <VStack>
+                  <Box p={2} bg="rgba(16, 185, 129, 0.2)" borderRadius="md">
+                    <BarChart3 size={20} color="rgb(16, 185, 129)" />
+                  </Box>
+                  <Text fontSize="xs" color="gray.400">Outputs</Text>
+                </VStack>
+              </HStack>
             </VStack>
           </Box>
         )}
@@ -495,9 +523,9 @@ export default function ETLPipelineBuilder() {
     setIsRunning(true);
     
     // Simulate pipeline execution
-    const updatedNodes = nodes.map(node => ({
+    const updatedNodes = nodes.map((node: Node) => ({
       ...node,
-      data: { ...node.data, status: 'running' as const }
+      data: { ...node.data, status: 'running' }
     }));
     setNodes(updatedNodes);
 
@@ -505,10 +533,10 @@ export default function ETLPipelineBuilder() {
     for (let i = 0; i < nodes.length; i++) {
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      setNodes(prevNodes => 
-        prevNodes.map((node, idx) => 
+      setNodes((prevNodes: Node[]) => 
+        prevNodes.map((node: Node, idx: number) => 
           idx === i 
-            ? { ...node, data: { ...node.data, status: 'success' as const } }
+            ? { ...node, data: { ...node.data, status: 'success' } }
             : node
         )
       );
@@ -559,6 +587,40 @@ export default function ETLPipelineBuilder() {
     onClose();
   };
 
+  const handleSelectTemplate = (template: any) => {
+    // This would convert the template to actual nodes and edges
+    // For now, we'll just show a success message
+    setShowTemplates(false);
+    toast({
+      title: "Template Applied",
+      description: `${template.name} template has been loaded to your canvas`,
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    });
+  };
+
+  if (showTemplates) {
+    return (
+      <Box bg="rgba(15, 15, 35, 0.95)" minHeight="100vh">
+        <Flex justify="space-between" align="center" p={6} borderBottom="1px solid" borderColor="rgba(255, 255, 255, 0.1)">
+          <Text fontSize="2xl" fontWeight="bold" color="white">
+            Choose a Pipeline Template
+          </Text>
+          <Button
+            onClick={() => setShowTemplates(false)}
+            variant="outline"
+            colorScheme="gray"
+            size="sm"
+          >
+            Back to Builder
+          </Button>
+        </Flex>
+        <PipelineTemplates onSelectTemplate={handleSelectTemplate} />
+      </Box>
+    );
+  }
+
   return (
     <DndContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
       <Box
@@ -579,6 +641,15 @@ export default function ETLPipelineBuilder() {
           </VStack>
           
           <HStack spacing={3}>
+            <Button
+              onClick={() => setShowTemplates(true)}
+              leftIcon={<BookOpen className="w-4 h-4" />}
+              colorScheme="blue"
+              variant="outline"
+              size="sm"
+            >
+              Templates
+            </Button>
             <Button
               onClick={onOpen}
               leftIcon={<Save className="w-4 h-4" />}

@@ -366,6 +366,45 @@ const nodeTemplates = {
         frequency: ['hourly', 'daily', 'weekly'],
         conditions: ['gas_price', 'slippage', 'volume']
       }
+    },
+    {
+      id: 'data-validator',
+      label: 'Data Validator',
+      category: 'Quality Control',
+      description: 'Validate data integrity and consistency',
+      icon: <CheckCircle className="w-4 h-4" />,
+      config: { 
+        validations: ['schema_check', 'range_validation', 'format_check', 'consistency_check'],
+        actions: ['reject', 'flag', 'correct', 'alert'],
+        severity: ['warning', 'error', 'critical'],
+        reporting: true
+      }
+    },
+    {
+      id: 'anomaly-detector',
+      label: 'Anomaly Detector',
+      category: 'Quality Control',
+      description: 'Detect data anomalies and outliers',
+      icon: <AlertTriangle className="w-4 h-4" />,
+      config: { 
+        methods: ['statistical', 'ml_based', 'threshold', 'pattern_based'],
+        sensitivity: ['low', 'medium', 'high'],
+        actions: ['flag', 'isolate', 'alert', 'investigate'],
+        learning: true
+      }
+    },
+    {
+      id: 'data-formatter',
+      label: 'Data Formatter',
+      category: 'Preparation',
+      description: 'Format data for specific export requirements',
+      icon: <Settings className="w-4 h-4" />,
+      config: { 
+        formats: ['financial', 'scientific', 'percentage', 'currency'],
+        precision: [2, 4, 6, 8],
+        localization: ['US', 'EU', 'UK', 'custom'],
+        standards: ['ISO', 'GAAP', 'IFRS']
+      }
     }
   ],
   outputs: [
@@ -516,6 +555,75 @@ const nodeTemplates = {
         metrics: ['apy', 'fees', 'rewards', 'risk_adjusted_return'],
         timeframes: ['24h', '7d', '30d', '90d'],
         sorting: ['apy_desc', 'risk_asc', 'volume_desc']
+      }
+    },
+    {
+      id: 'data-quality-check',
+      label: 'Data Quality Check',
+      category: 'Quality Assurance',
+      description: 'Automated data quality validation and alerts',
+      icon: <CheckCircle className="w-4 h-4" />,
+      config: { 
+        checks: ['completeness', 'accuracy', 'consistency', 'timeliness', 'validity'],
+        severity: ['low', 'medium', 'high', 'critical'],
+        alertChannels: ['email', 'webhook', 'dashboard'],
+        thresholds: { completeness: 95, accuracy: 98, timeliness: 90 }
+      }
+    },
+    {
+      id: 'csv-export',
+      label: 'CSV Export',
+      category: 'Export',
+      description: 'Export data to CSV format',
+      icon: <Download className="w-4 h-4" />,
+      config: { 
+        format: 'csv',
+        includeHeaders: true,
+        delimiter: ',',
+        encoding: 'utf-8',
+        includeMetadata: true
+      }
+    },
+    {
+      id: 'excel-export',
+      label: 'Excel Export',
+      category: 'Export',
+      description: 'Export data to Excel spreadsheet',
+      icon: <Download className="w-4 h-4" />,
+      config: { 
+        format: 'xlsx',
+        includeCharts: true,
+        multipleSheets: true,
+        includeMetadata: true,
+        formatting: true
+      }
+    },
+    {
+      id: 'pdf-export',
+      label: 'PDF Report',
+      category: 'Export',
+      description: 'Generate professional PDF reports',
+      icon: <Download className="w-4 h-4" />,
+      config: { 
+        format: 'pdf',
+        includeCharts: true,
+        template: 'professional',
+        sections: ['summary', 'details', 'charts', 'appendix'],
+        branding: true
+      }
+    },
+    {
+      id: 'json-export',
+      label: 'JSON Export',
+      category: 'Export',
+      description: 'Export data in JSON format for APIs',
+      icon: <Download className="w-4 h-4" />,
+      config: { 
+        format: 'json',
+        prettyPrint: true,
+        includeSchema: true,
+        validation: true,
+        compression: false
       }
     }
   ]

@@ -12,7 +12,6 @@ import {
   CardHeader,
   Flex,
   Badge,
-  Progress,
   SimpleGrid,
   Table,
   Thead,
@@ -20,18 +19,11 @@ import {
   Tr,
   Th,
   Td,
-  Alert,
-  AlertIcon,
   Stat,
   StatLabel,
   StatNumber,
   StatHelpText,
   StatArrow,
-  Tabs,
-  TabList,
-  Tab,
-  TabPanels,
-  TabPanel,
   useToast,
   Tooltip,
   Modal,
@@ -49,20 +41,12 @@ import {
   NumberInputField,
   Divider,
 } from '@chakra-ui/react';
-import { Line, Doughnut } from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
 import { motion } from 'framer-motion';
 import {
-  TrendingUp,
-  TrendingDown,
   AlertTriangle,
-  Target,
-  DollarSign,
-  PieChart,
-  Activity,
   Settings,
   Shield,
-  Zap,
-  BarChart3,
   CheckCircle,
   XCircle,
   Info
@@ -98,7 +82,6 @@ interface HedgingStrategy {
 
 export default function LPPositionManager() {
   const [positions, setPositions] = useState<LPPosition[]>([]);
-  const [selectedPosition, setSelectedPosition] = useState<LPPosition | null>(null);
   const [hedgingStrategies, setHedgingStrategies] = useState<HedgingStrategy[]>([]);
   const [loading, setLoading] = useState(true);
   const [autoRebalance, setAutoRebalance] = useState(false);
@@ -217,7 +200,7 @@ export default function LPPositionManager() {
     }
   };
 
-  const handleRebalance = (positionId: string) => {
+  const handleRebalance = () => {
     toast({
       title: "Rebalancing Position",
       description: "Your LP position is being rebalanced to optimal range",
@@ -483,7 +466,7 @@ export default function LPPositionManager() {
                         size="xs"
                         colorScheme="blue"
                         variant="outline"
-                        onClick={() => handleRebalance(position.id)}
+                        onClick={() => handleRebalance()}
                         isDisabled={position.inRange}
                       >
                         Rebalance

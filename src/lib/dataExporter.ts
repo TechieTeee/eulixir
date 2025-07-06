@@ -1,5 +1,5 @@
 // Data Export System for ETL Pipeline
-import { utils, writeFile } from 'xlsx';
+import { utils } from 'xlsx';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 

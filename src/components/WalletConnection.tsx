@@ -27,7 +27,6 @@ import {
   Copy, 
   ExternalLink,
   ChevronDown,
-  AlertCircle,
   CheckCircle 
 } from 'lucide-react';
 

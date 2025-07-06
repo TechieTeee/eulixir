@@ -83,7 +83,7 @@ interface PipelineNodeData extends Record<string, unknown> {
   type: 'source' | 'transform' | 'output';
   category: string;
   description?: string;
-  config?: any;
+  config?: Record<string, unknown>;
   status?: 'idle' | 'running' | 'success' | 'error';
   icon?: React.ReactNode;
 }
@@ -630,7 +630,7 @@ const nodeTemplates = {
 };
 
 // Draggable node component
-const DraggableNode = ({ node, isOverlay = false }: { node: any, isOverlay?: boolean }) => {
+const DraggableNode = ({ node, isOverlay = false }: { node: { id: string; label: string; type?: string; category: string; description?: string; icon?: React.ReactNode; config?: Record<string, unknown> }, isOverlay?: boolean }) => {
   const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
     id: node.id,
     data: node,
@@ -1032,7 +1032,7 @@ export default function ETLPipelineBuilder() {
     onClose();
   };
 
-  const handleSelectTemplate = (template: any) => {
+  const handleSelectTemplate = (template: { name: string; description: string }) => {
     // This would convert the template to actual nodes and edges
     // For now, we'll just show a success message
     setShowTemplates(false);

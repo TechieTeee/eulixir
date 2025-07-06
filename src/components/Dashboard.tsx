@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, lazy, Suspense } from "react";
+import { useEffect, useState, useCallback, lazy, Suspense } from "react";
 import {
   Box,
   Heading,
@@ -147,10 +147,10 @@ export default function Dashboard() {
   const [refreshing, setRefreshing] = useState<boolean>(false);
   const [selectedTimeframe, setSelectedTimeframe] = useState<string>('7d');
   const router = useRouter();
-  const { address, isConnected } = useAccount();
+  const { address } = useAccount();
 
   // Fetch data from API
-  const fetchData = async (showRefresh = false) => {
+  const fetchData = useCallback(async (showRefresh = false) => {
     try {
       if (showRefresh) setRefreshing(true);
       else setLoading(true);
@@ -175,7 +175,7 @@ export default function Dashboard() {
       setLoading(false);
       setRefreshing(false);
     }
-  };
+  }, [address]);
 
   useEffect(() => {
     fetchData();
@@ -183,7 +183,7 @@ export default function Dashboard() {
     // Auto-refresh every 30 seconds
     const interval = setInterval(() => fetchData(true), 30000);
     return () => clearInterval(interval);
-  }, []);
+  }, [fetchData]);
 
   // Calculate metrics
   const currentAPY = poolData.length > 0 ? poolData[poolData.length - 1]?.apy : 0;
@@ -310,7 +310,7 @@ export default function Dashboard() {
         borderColor: "rgba(147, 51, 234, 0.5)",
         borderWidth: 1,
         callbacks: {
-          label: function(context: any) {
+          label: function(context: { parsed: number; label: string }) {
             const value = context.parsed;
             const percentage = ((value / totalPortfolioValue) * 100).toFixed(1);
             return `${context.label}: $${value.toFixed(2)} (${percentage}%)`;

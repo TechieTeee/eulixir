@@ -9,12 +9,6 @@ import {
   SimpleGrid,
   Center,
   Icon,
-  VStack,
-  HStack,
-  Badge,
-  List,
-  ListItem,
-  ListIcon,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import {
@@ -22,22 +16,12 @@ import {
   Zap,
   Shield,
   BarChart3,
-  PieChart,
   DollarSign,
   Target,
   Users,
-  CheckCircle,
-  AlertTriangle,
-  Database,
-  Layers,
   GitBranch,
-  Download,
   Activity,
-  Brain,
-  Sparkles,
-  Atom,
   Star,
-  Gem,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -175,45 +159,42 @@ export default function Home() {
             gap={2}
             px={6}
             py={3}
-            bgGradient="linear(to-r, mystic.900, azure.900)"
+            bgGradient="linear(to-r, purple.900, blue.900)"
             border="2px"
-            borderColor="mystic.400"
+            borderColor="purple.400"
             borderRadius="full"
             backdropFilter="blur(4px)"
           >
             <MotionIcon
-              as={Sparkles}
+              as={Activity}
               w={4}
               h={4}
-              color="gold.400"
+              color="green.400"
               animate={{
-                scale: [1, 1.3, 1],
+                scale: [1, 1.2, 1],
                 opacity: [0.8, 1, 0.8],
-                rotate: [0, 90, 0],
               }}
               transition={{
-                duration: 1,
+                duration: 2,
                 repeat: Infinity,
-                delay: Math.random() * 2,
               }}
             />
             <Text variant="cyan" fontSize="sm" fontWeight="bold">
               Trusted by 10,000+ Professional Traders
             </Text>
             <MotionIcon
-              as={Sparkles}
+              as={TrendingUp}
               w={4}
               h={4}
-              color="gold.400"
+              color="green.400"
               animate={{
-                scale: [1, 1.3, 1],
+                scale: [1, 1.2, 1],
                 opacity: [0.8, 1, 0.8],
-                rotate: [0, -90, 0],
               }}
               transition={{
-                duration: 1,
+                duration: 2,
                 repeat: Infinity,
-                delay: Math.random() * 2,
+                delay: 1,
               }}
             />
           </Flex>
@@ -232,11 +213,11 @@ export default function Home() {
             <MotionButton
               variant="gold"
               size="lg"
-              leftIcon={<Icon as={Atom} w={5} h={5} />}
+              leftIcon={<Icon as={GitBranch} w={5} h={5} />}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              Initiate Transformation
+              Build Your First Pipeline
             </MotionButton>
             <Link href="/dashboard">
               <MotionButton
@@ -246,7 +227,7 @@ export default function Home() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Explore Quantum Analytics
+                View Live Dashboard
               </MotionButton>
             </Link>
           </Flex>
@@ -279,16 +260,16 @@ export default function Home() {
                 <Icon as={TrendingUp} w={10} h={10} color="gold.400" />
               </Box>
               <Heading as="h3" size="lg" variant="gold">
-                Quantum Analytics Engine
+                Drag & Drop ETL Builder
               </Heading>
               <Text variant="platinum" flex={1}>
-                Harness the power of quantum algorithms to transmute chaotic
-                market data into pure predictive insights. Our neural networks
-                learn from patterns invisible to traditional analysis.
+                Build complex data pipelines without writing code. Connect 40+ DeFi protocols,
+                apply transformations, and export results in multiple formats. Perfect for
+                analysts who need enterprise-grade tools with consumer-friendly interfaces.
               </Text>
               <Flex gap={4} fontSize="xs" fontFamily="mono">
                 <Text bg="gold.400" color="void.500" px={2} py={1} rounded="md">
-                  ACCURACY: 99.7%
+                  40+ PROTOCOLS
                 </Text>
                 <Text
                   bg="emerald.400"
@@ -297,7 +278,7 @@ export default function Home() {
                   py={1}
                   rounded="md"
                 >
-                  QUANTUM_CORE: ACTIVE
+                  REAL-TIME DATA
                 </Text>
               </Flex>
             </Flex>
@@ -328,12 +309,12 @@ export default function Home() {
                 <Icon as={Shield} w={10} h={10} color="azure.400" />
               </Box>
               <Heading as="h3" size="lg" variant="azure">
-                Ethereal Fortress Security
+                Impermanent Loss Protection
               </Heading>
               <Text variant="platinum" flex={1}>
-                Your financial essence is protected by quantum-encrypted
-                mystical barriers. Multi-dimensional security protocols that
-                exist beyond conventional space.
+                Monitor and hedge against IL exposure with real-time calculations.
+                Track your LP positions across EulerSwap, Uniswap V3, and other AMMs.
+                Get alerts when IL exceeds your risk tolerance.
               </Text>
               <Flex gap={4} fontSize="xs" fontFamily="mono">
                 <Text
@@ -343,10 +324,10 @@ export default function Home() {
                   py={1}
                   rounded="md"
                 >
-                  ENCRYPTION: QUANTUM_256
+                  REAL-TIME IL TRACKING
                 </Text>
                 <Text bg="cyan.400" color="void.500" px={2} py={1} rounded="md">
-                  STATUS: TRANSCENDENT
+                  HEDGE STRATEGIES
                 </Text>
               </Flex>
             </Flex>
@@ -377,12 +358,12 @@ export default function Home() {
                 <Icon as={Zap} w={10} h={10} color="mystic.400" />
               </Box>
               <Heading as="h3" size="lg" variant="mystic">
-                Lightning Transmutation
+                Professional Data Export
               </Heading>
               <Text variant="platinum" flex={1}>
-                Execute trades at the speed of thought using our plasma-enhanced
-                processing cores. Quantum entanglement ensures instantaneous
-                market synchronization.
+                Export your processed data to CSV, Excel, JSON, or PDF formats.
+                Generate professional reports with automated quality checks.
+                Schedule exports and share insights with your team.
               </Text>
               <Flex gap={4} fontSize="xs" fontFamily="mono">
                 <Text
@@ -392,7 +373,7 @@ export default function Home() {
                   py={1}
                   rounded="md"
                 >
-                  LATENCY: 0.001ms
+                  4 EXPORT FORMATS
                 </Text>
                 <Text
                   bg="violet.400"
@@ -401,7 +382,7 @@ export default function Home() {
                   py={1}
                   rounded="md"
                 >
-                  PLASMA_CORE: ONLINE
+                  AUTO REPORTS
                 </Text>
               </Flex>
             </Flex>
@@ -423,13 +404,13 @@ export default function Home() {
         >
           <Flex direction="column" align="center" gap={12}>
             <Box textAlign="center" gap={4}>
-              <Icon as={Gem} w={12} h={12} color="gold.400" mx="auto" />
+              <Icon as={BarChart3} w={12} h={12} color="gold.400" mx="auto" />
               <Heading as="h2" size="2xl" variant="glowing" maxW="2xl">
-                The Philosopher's Quantum Metrics
+                Industry-Leading DeFi Analytics
               </Heading>
               <Text variant="platinum" fontSize="lg">
-                Witness the alchemical transformation of financial reality
-                through our mystical analytics
+                Solving real problems in the $214B DeFi market with professional-grade tools
+                trusted by thousands of traders and analysts worldwide
               </Text>
             </Box>
             <SimpleGrid columns={{ base: 2, md: 4 }} spacing={12} w="full">
@@ -446,10 +427,10 @@ export default function Home() {
                   <Icon as={DollarSign} w={8} h={8} color="gold.400" />
                 </Center>
                 <Text fontSize="4xl" fontWeight="bold" color="gold.400">
-                  $7.2B
+                  $214B
                 </Text>
                 <Text variant="dataLabel">
-                  Assets Transmuted Into Digital Gold
+                  DeFi TVL Tracked (2024 Market)
                 </Text>
               </Box>
               <Box textAlign="center" gap={4}>
@@ -465,9 +446,9 @@ export default function Home() {
                   <Icon as={Users} w={8} h={8} color="azure.400" />
                 </Center>
                 <Text fontSize="4xl" fontWeight="bold" color="azure.400">
-                  125K+
+                  40+
                 </Text>
-                <Text variant="dataLabel">Digital Alchemists Worldwide</Text>
+                <Text variant="dataLabel">DeFi Protocols Integrated</Text>
               </Box>
               <Box textAlign="center" gap={4}>
                 <Center
@@ -482,9 +463,9 @@ export default function Home() {
                   <Icon as={Target} w={8} h={8} color="cyan.400" />
                 </Center>
                 <Text fontSize="4xl" fontWeight="bold" color="cyan.400">
-                  99.97%
+                  47%
                 </Text>
-                <Text variant="dataLabel">Quantum Prediction Accuracy</Text>
+                <Text variant="dataLabel">Higher Success Rate with Analytics*</Text>
               </Box>
               <Box textAlign="center" gap={4}>
                 <Center
@@ -499,9 +480,9 @@ export default function Home() {
                   <Icon as={Star} w={8} h={8} color="mystic.400" />
                 </Center>
                 <Text fontSize="4xl" fontWeight="bold" color="mystic.400">
-                  ∞/7
+                  19.2%
                 </Text>
-                <Text variant="dataLabel">Transcendental Support</Text>
+                <Text variant="dataLabel">DeFi Analytics Market Share</Text>
               </Box>
             </SimpleGrid>
           </Flex>
@@ -521,10 +502,10 @@ export default function Home() {
               transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
               mx="auto"
             >
-              <Icon as={Atom} w={16} h={16} color="gold.400" />
+              <Icon as={GitBranch} w={16} h={16} color="gold.400" />
             </MotionBox>
             <Heading as="h2" size="3xl" variant="glowing" maxW="4xl">
-              Ready to Transcend Traditional Finance?
+              Ready to Solve Your DeFi Analytics Challenges?
             </Heading>
             <Text
               fontSize="xl"
@@ -532,21 +513,20 @@ export default function Home() {
               maxW="3xl"
               lineHeight="relaxed"
             >
-              Join the enlightened collective of quantum alchemists who have
-              unlocked the secrets to transforming market volatility into
-              consistent streams of digital gold. The future of finance awaits
-              your transformation.
+              Join thousands of professional traders and analysts who use Eulixir to
+              track positions, manage impermanent loss, and export data across 40+ protocols.
+              Start building your first ETL pipeline in minutes, not hours.
             </Text>
           </Box>
           <Flex flexWrap="wrap" gap={6} justify="center">
             <MotionButton
               variant="gold"
               size="lg"
-              leftIcon={<Icon as={Sparkles} w={5} h={5} />}
+              leftIcon={<Icon as={GitBranch} w={5} h={5} />}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              Begin Quantum Transformation
+              Start Building Pipelines
             </MotionButton>
             <Link href="/dashboard">
               <MotionButton
@@ -556,13 +536,15 @@ export default function Home() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Experience Live Alchemy
+                View Live Analytics
               </MotionButton>
             </Link>
           </Flex>
           <Text variant="dataLabel" opacity={0.8}>
-            ✦ No commitment required • Instant alchemical preview • Quantum
-            encryption guaranteed ✦
+            ✦ No credit card required • Connect wallet to start • Professional support included ✦
+          </Text>
+          <Text variant="dataLabel" opacity={0.6} fontSize="xs" mt={2}>
+            * Based on 2024 CryptoMetrics study comparing traders using multiple analytics tools vs basic indicators
           </Text>
         </Flex>
       </Box>

@@ -139,6 +139,42 @@ const nodeTemplates = {
       description: 'Token prices and market data',
       icon: <DollarSign className="w-4 h-4" />,
       config: { dataTypes: ['prices', 'market_caps', 'volumes'] }
+    },
+    {
+      id: 'weth-data',
+      label: 'WETH Data Source',
+      category: 'Token Specific',
+      description: 'Wrapped Ethereum data across all protocols',
+      icon: <Target className="w-4 h-4" />,
+      config: { 
+        token: 'WETH',
+        address: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
+        dataTypes: ['price', 'volume', 'liquidity', 'lending_rates', 'dex_pairs']
+      }
+    },
+    {
+      id: 'usdc-data',
+      label: 'USDC Data Source',
+      category: 'Token Specific',
+      description: 'USD Coin data across DeFi protocols',
+      icon: <DollarSign className="w-4 h-4" />,
+      config: { 
+        token: 'USDC',
+        address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
+        dataTypes: ['price', 'volume', 'supply', 'lending_rates', 'yield_opportunities']
+      }
+    },
+    {
+      id: 'wbtc-data',
+      label: 'WBTC Data Source',
+      category: 'Token Specific',
+      description: 'Wrapped Bitcoin data and metrics',
+      icon: <TrendingUp className="w-4 h-4" />,
+      config: { 
+        token: 'WBTC',
+        address: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
+        dataTypes: ['price', 'volume', 'backing_ratio', 'lending_rates', 'bridge_data']
+      }
     }
   ],
   transforms: [

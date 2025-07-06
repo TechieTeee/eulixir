@@ -225,6 +225,51 @@ const nodeTemplates = {
       description: 'Calculate asset allocation percentages',
       icon: <PieChart className="w-4 h-4" />,
       config: { allocationType: 'percentage', rebalanceFreq: 'daily' }
+    },
+    {
+      id: 'weth-analytics',
+      label: 'WETH Analytics',
+      category: 'Token Analysis',
+      description: 'WETH-specific calculations and metrics',
+      icon: <BarChart3 className="w-4 h-4" />,
+      config: { 
+        metrics: ['eth_premium', 'unwrap_volume', 'gas_efficiency', 'dex_arbitrage'],
+        timeframes: ['1h', '24h', '7d']
+      }
+    },
+    {
+      id: 'usdc-analytics',
+      label: 'USDC Analytics',
+      category: 'Token Analysis',
+      description: 'USDC supply, demand, and yield analysis',
+      icon: <DollarSign className="w-4 h-4" />,
+      config: { 
+        metrics: ['supply_growth', 'yield_comparison', 'depeg_risk', 'circulation'],
+        protocols: ['compound', 'aave', 'maker']
+      }
+    },
+    {
+      id: 'wbtc-analytics',
+      label: 'WBTC Analytics',
+      category: 'Token Analysis',
+      description: 'WBTC backing ratio and bridge analysis',
+      icon: <TrendingUp className="w-4 h-4" />,
+      config: { 
+        metrics: ['backing_ratio', 'mint_burn_activity', 'custodian_health', 'btc_premium'],
+        alerts: ['backing_threshold', 'large_mints', 'custodian_changes']
+      }
+    },
+    {
+      id: 'token-correlation',
+      label: 'Token Correlation',
+      category: 'Cross-Asset',
+      description: 'Analyze correlations between WETH, USDC, WBTC',
+      icon: <GitBranch className="w-4 h-4" />,
+      config: { 
+        tokens: ['WETH', 'USDC', 'WBTC'],
+        metrics: ['price_correlation', 'volume_correlation', 'volatility_correlation'],
+        timeframes: ['1h', '1d', '7d', '30d']
+      }
     }
   ],
   outputs: [
@@ -275,6 +320,42 @@ const nodeTemplates = {
       description: 'Send email notifications',
       icon: <AlertTriangle className="w-4 h-4" />,
       config: { recipients: [], subject: '', threshold: 0 }
+    },
+    {
+      id: 'token-dashboard',
+      label: 'Token Dashboard',
+      category: 'Visualization',
+      description: 'Comprehensive dashboard for WETH/USDC/WBTC',
+      icon: <BarChart3 className="w-4 h-4" />,
+      config: { 
+        tokens: ['WETH', 'USDC', 'WBTC'],
+        widgets: ['price_chart', 'volume_chart', 'metrics_table', 'correlation_matrix'],
+        refreshRate: '30s'
+      }
+    },
+    {
+      id: 'yield-comparison',
+      label: 'Yield Comparison Chart',
+      category: 'Visualization',
+      description: 'Compare yields across protocols for these tokens',
+      icon: <TrendingUp className="w-4 h-4" />,
+      config: { 
+        tokens: ['WETH', 'USDC', 'WBTC'],
+        protocols: ['aave', 'compound', 'euler'],
+        chartType: 'comparison_bar'
+      }
+    },
+    {
+      id: 'risk-alert',
+      label: 'Risk Alert System',
+      category: 'Notification',
+      description: 'Automated alerts for token-specific risks',
+      icon: <AlertTriangle className="w-4 h-4" />,
+      config: { 
+        alerts: ['depeg_risk', 'high_volatility', 'low_liquidity', 'backing_issues'],
+        thresholds: { depeg: 0.02, volatility: 0.1, liquidity: 1000000 },
+        channels: ['email', 'webhook', 'dashboard']
+      }
     }
   ]
 };

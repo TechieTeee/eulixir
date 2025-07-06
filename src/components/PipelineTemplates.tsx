@@ -133,6 +133,99 @@ const pipelineTemplates = [
       { type: 'output', name: 'Dashboard' },
       { type: 'output', name: 'PDF Report' }
     ]
+  },
+  {
+    id: 'weth-monitor',
+    name: 'WETH Yield Monitor',
+    description: 'Track WETH lending rates and yield opportunities',
+    icon: TrendingUp,
+    category: 'Token Focus',
+    difficulty: 'Beginner',
+    estimatedTime: '6 min',
+    useCase: 'Monitor WETH yields across Aave, Compound, Euler and find best rates',
+    nodes: [
+      { type: 'source', name: 'WETH Data Source' },
+      { type: 'source', name: 'Aave V3' },
+      { type: 'source', name: 'Compound V3' },
+      { type: 'transform', name: 'WETH Analytics' },
+      { type: 'transform', name: 'Yield Comparison' },
+      { type: 'output', name: 'Yield Comparison Chart' },
+      { type: 'output', name: 'Risk Alert System' }
+    ]
+  },
+  {
+    id: 'usdc-yield-tracker',
+    name: 'USDC Yield Optimizer',
+    description: 'Find the best USDC yields and track supply metrics',
+    icon: DollarSign,
+    category: 'Token Focus',
+    difficulty: 'Beginner',
+    estimatedTime: '5 min',
+    useCase: 'Optimize USDC yields, monitor supply growth and depeg risks',
+    nodes: [
+      { type: 'source', name: 'USDC Data Source' },
+      { type: 'source', name: 'CoinGecko Prices' },
+      { type: 'transform', name: 'USDC Analytics' },
+      { type: 'transform', name: 'Risk Metrics' },
+      { type: 'output', name: 'Token Dashboard' },
+      { type: 'output', name: 'Email Alert' }
+    ]
+  },
+  {
+    id: 'wbtc-backing-monitor',
+    name: 'WBTC Backing Monitor',
+    description: 'Monitor WBTC backing ratio and custodian health',
+    icon: AlertTriangle,
+    category: 'Token Focus',
+    difficulty: 'Intermediate',
+    estimatedTime: '8 min',
+    useCase: 'Track WBTC backing ratio, mint/burn activity, and custodian risks',
+    nodes: [
+      { type: 'source', name: 'WBTC Data Source' },
+      { type: 'source', name: 'Bitcoin Network Data' },
+      { type: 'transform', name: 'WBTC Analytics' },
+      { type: 'transform', name: 'Backing Verification' },
+      { type: 'output', name: 'Risk Dashboard' },
+      { type: 'output', name: 'Risk Alert System' }
+    ]
+  },
+  {
+    id: 'three-token-correlation',
+    name: 'WETH/USDC/WBTC Correlation',
+    description: 'Analyze correlations and relationships between the three major tokens',
+    icon: Target,
+    category: 'Cross-Asset',
+    difficulty: 'Advanced',
+    estimatedTime: '15 min',
+    useCase: 'Understand how WETH, USDC, and WBTC move together for portfolio optimization',
+    nodes: [
+      { type: 'source', name: 'WETH Data Source' },
+      { type: 'source', name: 'USDC Data Source' },
+      { type: 'source', name: 'WBTC Data Source' },
+      { type: 'transform', name: 'Token Correlation' },
+      { type: 'transform', name: 'Statistical Analysis' },
+      { type: 'output', name: 'Correlation Matrix' },
+      { type: 'output', name: 'Portfolio Optimization' }
+    ]
+  },
+  {
+    id: 'token-arbitrage',
+    name: 'Cross-Token Arbitrage Scanner',
+    description: 'Find arbitrage opportunities between WETH, USDC, WBTC pairs',
+    icon: Activity,
+    category: 'Trading',
+    difficulty: 'Advanced',
+    estimatedTime: '18 min',
+    useCase: 'Scan for arbitrage opportunities across DEXs for major token pairs',
+    nodes: [
+      { type: 'source', name: 'Uniswap V3 Pools' },
+      { type: 'source', name: 'Sushiswap Pools' },
+      { type: 'source', name: 'Curve Pools' },
+      { type: 'transform', name: 'Price Comparison' },
+      { type: 'transform', name: 'Profit Calculator' },
+      { type: 'output', name: 'Arbitrage Alerts' },
+      { type: 'output', name: 'Trading Dashboard' }
+    ]
   }
 ];
 

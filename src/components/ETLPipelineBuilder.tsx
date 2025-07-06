@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, lazy, Suspense } from 'react';
 import {
   Box,
   VStack,
@@ -28,28 +28,31 @@ import {
   useDisclosure,
   Input,
   Textarea,
+  Spinner,
 } from '@chakra-ui/react';
 import {
-  ReactFlow,
   Node,
   Edge,
-  Controls,
-  Background,
   useNodesState,
   useEdgesState,
   addEdge,
   Connection,
   BackgroundVariant,
   NodeTypes,
-  MiniMap,
   Handle,
   Position,
   MarkerType,
 } from '@xyflow/react';
-import '@xyflow/react/dist/style.css';
 import { DndContext, DragEndEvent, DragOverlay, DragStartEvent } from '@dnd-kit/core';
 import { CSS } from '@dnd-kit/utilities';
 import { useDraggable, useDroppable } from '@dnd-kit/core';
+import LoadingSpinner from './LoadingSpinner';
+
+// Lazy load heavy React Flow components
+const ReactFlow = lazy(() => import('@xyflow/react').then(module => ({ default: module.ReactFlow })));
+const Controls = lazy(() => import('@xyflow/react').then(module => ({ default: module.Controls })));
+const Background = lazy(() => import('@xyflow/react').then(module => ({ default: module.Background })));
+const MiniMap = lazy(() => import('@xyflow/react').then(module => ({ default: module.MiniMap })));
 import { 
   Database, 
   GitBranch, 
@@ -70,8 +73,7 @@ import {
   CheckCircle,
   Trash2,
   Edit,
-  BookOpen,
-  Lightbulb
+  BookOpen
 } from 'lucide-react';
 import PipelineTemplates from './PipelineTemplates';
 
@@ -852,44 +854,52 @@ export default function ETLPipelineBuilder() {
         borderRadius="xl"
         position="relative"
       >
-        <ReactFlow
-          nodes={nodes}
-          edges={edges}
-          onNodesChange={onNodesChange}
-          onEdgesChange={onEdgesChange}
-          onConnect={onConnect}
-          nodeTypes={nodeTypes}
-          fitView
-          defaultEdgeOptions={{
-            style: { 
-              stroke: '#9333EA', 
-              strokeWidth: 2,
-            },
-            type: 'smoothstep',
-            animated: true,
-            markerEnd: {
-              type: MarkerType.Arrow,
-              color: '#9333EA',
-            },
-          }}
-          style={{
-            backgroundColor: 'transparent',
-          }}
-        >
-          <Controls />
-          <MiniMap 
-            style={{
-              backgroundColor: 'rgba(26, 32, 44, 0.8)',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
+        <Suspense fallback={<LoadingSpinner message="Loading pipeline builder..." size="lg" />}>
+          <ReactFlow
+            nodes={nodes}
+            edges={edges}
+            onNodesChange={onNodesChange}
+            onEdgesChange={onEdgesChange}
+            onConnect={onConnect}
+            nodeTypes={nodeTypes}
+            fitView
+            defaultEdgeOptions={{
+              style: { 
+                stroke: '#9333EA', 
+                strokeWidth: 2,
+              },
+              type: 'smoothstep',
+              animated: true,
+              markerEnd: {
+                type: MarkerType.Arrow,
+                color: '#9333EA',
+              },
             }}
-          />
-          <Background 
-            variant={BackgroundVariant.Dots} 
-            gap={20} 
-            size={1}
-            color="rgba(255, 255, 255, 0.1)"
-          />
-        </ReactFlow>
+            style={{
+              backgroundColor: 'transparent',
+            }}
+          >
+            <Suspense fallback={<Spinner size="sm" />}>
+              <Controls />
+            </Suspense>
+            <Suspense fallback={null}>
+              <MiniMap 
+                style={{
+                  backgroundColor: 'rgba(26, 32, 44, 0.8)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                }}
+              />
+            </Suspense>
+            <Suspense fallback={null}>
+              <Background 
+                variant={BackgroundVariant.Dots} 
+                gap={20} 
+                size={1}
+                color="rgba(255, 255, 255, 0.1)"
+              />
+            </Suspense>
+          </ReactFlow>
+        </Suspense>
         
         {nodes.length === 0 && (
           <Box
@@ -902,16 +912,16 @@ export default function ETLPipelineBuilder() {
             zIndex={1}
           >
             <VStack spacing={6}>
-              <Lightbulb size={48} color="rgba(147, 51, 234, 0.6)" />
+              <GitBranch size={48} color="rgba(147, 51, 234, 0.6)" />
               <VStack spacing={3}>
                 <Text color="white" fontSize="xl" fontWeight="bold">
-                  Build Your First Pipeline
+                  Welcome to the Alchemy Laboratory!
                 </Text>
                 <Text color="gray.400" fontSize="md">
-                  Drag nodes from the palette to build your pipeline
+                  Wise owl alchemists await to guide your data transmutation
                 </Text>
                 <Text color="gray.500" fontSize="sm">
-                  Start with a Data Source → Add Transformations → Choose Outputs
+                  Gather Essences → Mix Elements → Distill Pure Gold
                 </Text>
               </VStack>
               <HStack spacing={8}>
@@ -919,21 +929,21 @@ export default function ETLPipelineBuilder() {
                   <Box p={2} bg="rgba(59, 130, 246, 0.2)" borderRadius="md">
                     <Database size={20} color="rgb(59, 130, 246)" />
                   </Box>
-                  <Text fontSize="xs" color="gray.400">Sources</Text>
+                  <Text fontSize="xs" color="gray.400">Essences</Text>
                 </VStack>
                 <ArrowRight size={20} color="rgba(255, 255, 255, 0.3)" />
                 <VStack>
                   <Box p={2} bg="rgba(245, 158, 11, 0.2)" borderRadius="md">
                     <Filter size={20} color="rgb(245, 158, 11)" />
                   </Box>
-                  <Text fontSize="xs" color="gray.400">Transform</Text>
+                  <Text fontSize="xs" color="gray.400">Transmute</Text>
                 </VStack>
                 <ArrowRight size={20} color="rgba(255, 255, 255, 0.3)" />
                 <VStack>
                   <Box p={2} bg="rgba(16, 185, 129, 0.2)" borderRadius="md">
                     <BarChart3 size={20} color="rgb(16, 185, 129)" />
                   </Box>
-                  <Text fontSize="xs" color="gray.400">Outputs</Text>
+                  <Text fontSize="xs" color="gray.400">Elixirs</Text>
                 </VStack>
               </HStack>
             </VStack>

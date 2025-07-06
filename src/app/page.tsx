@@ -13,15 +13,14 @@ import {
 import { motion } from "framer-motion";
 import {
   TrendingUp,
-  Zap,
   Shield,
   BarChart3,
-  DollarSign,
   Target,
   Users,
   GitBranch,
   Activity,
   Star,
+  DollarSign,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -153,15 +152,15 @@ export default function Home() {
           textAlign="center"
         >
        
-       <Heading
-  as="h1"
-  fontSize={{ base: '6xl', md: '8xl', lg: '10xl' }}
-  fontWeight="extrabold"
-  lineHeight="tight"
-  variant="glowing"
->
-  Eulixir
-</Heading>
+        <Heading
+          as="h1"
+          fontSize={{ base: '6xl', md: '8xl', lg: '10xl' }}
+          fontWeight="extrabold"
+          lineHeight="tight"
+          variant="glowing"
+        >
+          Eulixir
+        </Heading>
 
 <Heading
   as="h2"
@@ -170,7 +169,7 @@ export default function Home() {
   color="gray.300"
   mt={4}
 >
-  Professional DeFi Analytics & ETL Platform
+  The Alchemist&apos;s Laboratory for DeFi Data
 </Heading>
 
 
@@ -200,7 +199,7 @@ export default function Home() {
               }}
             />
             <Text variant="cyan" fontSize="sm" fontWeight="bold">
-              Trusted by 10,000+ Professional Traders
+              The Formula for the Future of Finance 
             </Text>
             <MotionIcon
               as={TrendingUp}
@@ -225,9 +224,9 @@ export default function Home() {
             lineHeight="relaxed"
             fontWeight="medium"
           >
-            Build professional-grade ETL pipelines for DeFi analytics without code.
-            Track LP positions, manage impermanent loss, and export data across 40+ protocols.
-            Join the platform solving the $214B DeFi market&apos;s biggest data challenges.
+            Transform raw DeFi data into liquid gold through our mystical ETL laboratory.
+            Mix protocols, distill insights, and crystallize perfect analytics with the wisdom
+            of our owl alchemists guiding your every experiment.
           </Text>
           <Flex flexWrap="wrap" gap={6} justify="center">
             <MotionButton
@@ -269,23 +268,13 @@ export default function Home() {
             transition={{ duration: 0.5 }}
           >
             <Flex direction="column" h="full" gap={6}>
-              <Box
-                p={4}
-                borderRadius="xl"
-                bgGradient="linear(to-br, gold.500, transparent)"
-                border="1px"
-                borderColor="gold.400"
-                w="fit-content"
-              >
-                <Icon as={TrendingUp} w={10} h={10} color="gold.400" />
-              </Box>
               <Heading as="h3" size="lg" variant="gold">
-                Drag & Drop ETL Builder
+                The Mixing Chamber
               </Heading>
               <Text variant="platinum" flex={1}>
-                Build complex data pipelines without writing code. Connect 40+ DeFi protocols,
-                apply transformations, and export results in multiple formats. Perfect for
-                analysts who need enterprise-grade tools with consumer-friendly interfaces.
+                Like ancient alchemists combining elements, our drag & drop laboratory
+                lets you blend 40+ DeFi protocols into powerful data elixirs. No coding
+                required - just pure mystical wisdom distilled into actionable insights.
               </Text>
               <Flex gap={4} fontSize="xs" fontFamily="mono">
                 <Text bg="gold.400" color="void.500" px={2} py={1} rounded="md">
@@ -329,12 +318,12 @@ export default function Home() {
                 <Icon as={Shield} w={10} h={10} color="azure.400" />
               </Box>
               <Heading as="h3" size="lg" variant="azure">
-                Impermanent Loss Protection
+                Protection Potions
               </Heading>
               <Text variant="platinum" flex={1}>
-                Monitor and hedge against IL exposure with real-time calculations.
-                Track your LP positions across EulerSwap, Uniswap V3, and other AMMs.
-                Get alerts when IL exceeds your risk tolerance.
+                Brew powerful protection potions against impermanent loss! Our crystal
+                ball shows real-time IL calculations across all AMMs. Get mystical alerts
+                when your positions need rebalancing magic.
               </Text>
               <Flex gap={4} fontSize="xs" fontFamily="mono">
                 <Text
@@ -375,15 +364,15 @@ export default function Home() {
                 borderColor="mystic.400"
                 w="fit-content"
               >
-                <Icon as={Zap} w={10} h={10} color="mystic.400" />
+                <Icon as={Activity} w={10} h={10} color="mystic.400" />
               </Box>
               <Heading as="h3" size="lg" variant="mystic">
-                Professional Data Export
+                The Distillation Chamber
               </Heading>
               <Text variant="platinum" flex={1}>
-                Export your processed data to CSV, Excel, JSON, or PDF formats.
-                Generate professional reports with automated quality checks.
-                Schedule exports and share insights with your team.
+                Transform your raw data through our mystical distillation process!
+                Extract pure insights into CSV, Excel, JSON, or PDF elixirs. Each report
+                blessed with automated quality enchantments.
               </Text>
               <Flex gap={4} fontSize="xs" fontFamily="mono">
                 <Text
@@ -424,13 +413,12 @@ export default function Home() {
         >
           <Flex direction="column" align="center" gap={12}>
             <Box textAlign="center" gap={4}>
-              <Icon as={BarChart3} w={12} h={12} color="gold.400" mx="auto" />
               <Heading as="h2" size="2xl" variant="glowing" maxW="2xl">
-                Industry-Leading DeFi Analytics
+                The Grand Alchemical Results
               </Heading>
               <Text variant="platinum" fontSize="lg">
-                Solving real problems in the $214B DeFi market with professional-grade tools
-                trusted by thousands of traders and analysts worldwide
+                Behold the transmuted treasures of our mystical laboratory!
+                Witness the golden ratio of success achieved by our wise owl alchemists.
               </Text>
             </Box>
             <SimpleGrid columns={{ base: 2, md: 4 }} spacing={12} w="full">
@@ -450,7 +438,7 @@ export default function Home() {
                   $214B
                 </Text>
                 <Text variant="dataLabel">
-                  DeFi TVL Tracked (2024 Market)
+                  Liquid Gold Transmuted
                 </Text>
               </Box>
               <Box textAlign="center" gap={4}>
@@ -465,10 +453,21 @@ export default function Home() {
                 >
                   <Icon as={Users} w={8} h={8} color="azure.400" />
                 </Center>
+                <Center
+                  p={4}
+                  borderRadius="full"
+                  bgGradient="linear(to-br, azure.500, transparent)"
+                  border="2px"
+                  borderColor="azure.400"
+                  w="fit-content"
+                  mx="auto"
+                >
+                  <Icon as={Target} w={8} h={8} color="azure.400" />
+                </Center>
                 <Text fontSize="4xl" fontWeight="bold" color="azure.400">
                   40+
                 </Text>
-                <Text variant="dataLabel">DeFi Protocols Integrated</Text>
+                <Text variant="dataLabel">Mystical Protocol Essences</Text>
               </Box>
               <Box textAlign="center" gap={4}>
                 <Center
@@ -482,10 +481,21 @@ export default function Home() {
                 >
                   <Icon as={Target} w={8} h={8} color="cyan.400" />
                 </Center>
+                <Center
+                  p={4}
+                  borderRadius="full"
+                  bgGradient="linear(to-br, cyan.500, transparent)"
+                  border="2px"
+                  borderColor="cyan.400"
+                  w="fit-content"
+                  mx="auto"
+                >
+                  <Icon as={Star} w={8} h={8} color="cyan.400" />
+                </Center>
                 <Text fontSize="4xl" fontWeight="bold" color="cyan.400">
                   47%
                 </Text>
-                <Text variant="dataLabel">Higher Success Rate with Analytics*</Text>
+                <Text variant="dataLabel">Crystal Ball Accuracy Boost*</Text>
               </Box>
               <Box textAlign="center" gap={4}>
                 <Center
@@ -499,10 +509,21 @@ export default function Home() {
                 >
                   <Icon as={Star} w={8} h={8} color="mystic.400" />
                 </Center>
+                <Center
+                  p={4}
+                  borderRadius="full"
+                  bgGradient="linear(to-br, mystic.500, transparent)"
+                  border="2px"
+                  borderColor="mystic.400"
+                  w="fit-content"
+                  mx="auto"
+                >
+                  <Icon as={TrendingUp} w={8} h={8} color="mystic.400" />
+                </Center>
                 <Text fontSize="4xl" fontWeight="bold" color="mystic.400">
                   19.2%
                 </Text>
-                <Text variant="dataLabel">DeFi Analytics Market Share</Text>
+                <Text variant="dataLabel">Flame of Market Dominance</Text>
               </Box>
             </SimpleGrid>
           </Flex>
@@ -517,15 +538,11 @@ export default function Home() {
           textAlign="center"
         >
           <Box gap={6}>
-            <MotionBox
-              animate={{ rotate: 360 }}
-              transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-              mx="auto"
-            >
-              <Icon as={GitBranch} w={16} h={16} color="gold.400" />
-            </MotionBox>
+            <Box mb={6}>
+              <Icon as={GitBranch} w={16} h={16} color="gold.400" mx="auto" />
+            </Box>
             <Heading as="h2" size="3xl" variant="glowing" maxW="4xl">
-              Ready to Solve Your DeFi Analytics Challenges?
+              Ready to Begin Your Alchemical Journey?
             </Heading>
             <Text
               fontSize="xl"
@@ -533,9 +550,9 @@ export default function Home() {
               maxW="3xl"
               lineHeight="relaxed"
             >
-              Join thousands of professional traders and analysts who use Eulixir to
-              track positions, manage impermanent loss, and export data across 40+ protocols.
-              Start building your first ETL pipeline in minutes, not hours.
+              Join the mystical order of data alchemists! Let our wise owls guide you
+              through the transmutation of raw DeFi data into pure analytical gold.
+              Your laboratory awaits, young apprentice.
             </Text>
           </Box>
           <Flex flexWrap="wrap" gap={6} justify="center">
@@ -546,7 +563,7 @@ export default function Home() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              Start Building Pipelines
+              Enter the Laboratory
             </MotionButton>
             <Link href="/dashboard">
               <MotionButton
@@ -556,12 +573,12 @@ export default function Home() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                View Live Analytics
+                See the Magic
               </MotionButton>
             </Link>
           </Flex>
           <Text variant="dataLabel" opacity={0.8}>
-            ✦ No credit card required • Connect wallet to start • Professional support included ✦
+            ✦ No credit card required ✦
           </Text>
           <Text variant="dataLabel" opacity={0.6} fontSize="xs" mt={2}>
             * Based on 2024 CryptoMetrics study comparing traders using multiple analytics tools vs basic indicators

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
 import {
   Box,
   Heading,
@@ -29,18 +29,17 @@ import {
   StatHelpText,
   StatArrow,
   Progress,
-  Tooltip,
-  IconButton,
-  useColorModeValue,
-  Divider,
   Avatar,
-  AvatarGroup,
 } from "@chakra-ui/react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Line, Doughnut, Bar } from "react-chartjs-2";
+import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import WalletConnection from './WalletConnection';
 import { useAccount } from 'wagmi';
+import LoadingSpinner from './LoadingSpinner';
+
+// Lazy load heavy components
+const WalletConnection = lazy(() => import('./WalletConnection'));
+const Line = lazy(() => import('react-chartjs-2').then(module => ({ default: module.Line })));
+const Doughnut = lazy(() => import('react-chartjs-2').then(module => ({ default: module.Doughnut })));
 import {
   Chart as ChartJS,
   LineElement,
@@ -434,7 +433,9 @@ export default function Dashboard() {
             <Badge colorScheme="green" variant="subtle" px={3} py={1}>
               Live
             </Badge>
-            <WalletConnection compact showBalance={false} />
+            <Suspense fallback={<Spinner size="sm" />}>
+              <WalletConnection compact showBalance={false} />
+            </Suspense>
           </HStack>
         </Flex>
 
@@ -510,7 +511,9 @@ export default function Dashboard() {
               
               <Box height="300px">
                 {poolData.length > 0 ? (
-                  <Line data={apyChartData} options={apyChartOptions} />
+                  <Suspense fallback={<LoadingSpinner message="Loading chart..." size="md" />}>
+                    <Line data={apyChartData} options={apyChartOptions} />
+                  </Suspense>
                 ) : (
                   <Center height="100%">
                     <Text color="gray.400">No data available</Text>
@@ -544,14 +547,18 @@ export default function Dashboard() {
               
               <Box height="300px">
                 {portfolio.length > 0 ? (
-                  <Doughnut data={portfolioChartData} options={portfolioChartOptions} />
+                  <Suspense fallback={<LoadingSpinner message="Loading chart..." size="md" />}>
+                    <Doughnut data={portfolioChartData} options={portfolioChartOptions} />
+                  </Suspense>
                 ) : (
                   <Center height="100%">
                     <VStack spacing={4}>
                       <Text color="gray.400">No positions found</Text>
-                      <Button colorScheme="purple" variant="outline" size="sm">
-                        Connect Wallet
-                      </Button>
+                      <Suspense fallback={<Spinner size="sm" />}>
+                        <Button colorScheme="purple" variant="outline" size="sm">
+                          Connect Wallet
+                        </Button>
+                      </Suspense>
                     </VStack>
                   </Center>
                 )}

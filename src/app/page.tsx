@@ -227,7 +227,7 @@ export default function Home() {
           >
             Build professional-grade ETL pipelines for DeFi analytics without code.
             Track LP positions, manage impermanent loss, and export data across 40+ protocols.
-            Join the platform solving the $214B DeFi market's biggest data challenges.
+            Join the platform solving the $214B DeFi market&apos;s biggest data challenges.
           </Text>
           <Flex flexWrap="wrap" gap={6} justify="center">
             <MotionButton

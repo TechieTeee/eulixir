@@ -175,6 +175,42 @@ const nodeTemplates = {
         address: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
         dataTypes: ['price', 'volume', 'backing_ratio', 'lending_rates', 'bridge_data']
       }
+    },
+    {
+      id: 'eulerswap-positions',
+      label: 'EulerSwap LP Positions',
+      category: 'DeFi',
+      description: 'Track EulerSwap liquidity provider positions',
+      icon: <PieChart className="w-4 h-4" />,
+      config: { 
+        dataTypes: ['positions', 'liquidity', 'fees', 'performance'],
+        protocols: ['eulerswap'],
+        positionTypes: ['active', 'closed', 'all']
+      }
+    },
+    {
+      id: 'lp-yield-tracker',
+      label: 'LP Yield Tracker',
+      category: 'DeFi',
+      description: 'Monitor yield and performance of LP positions',
+      icon: <TrendingUp className="w-4 h-4" />,
+      config: { 
+        dataTypes: ['apy', 'fees', 'rewards', 'volume'],
+        timeframes: ['1h', '24h', '7d', '30d'],
+        protocols: ['uniswap', 'sushiswap', 'eulerswap']
+      }
+    },
+    {
+      id: 'il-monitor',
+      label: 'Impermanent Loss Monitor',
+      category: 'Risk Management',
+      description: 'Real-time impermanent loss tracking',
+      icon: <AlertTriangle className="w-4 h-4" />,
+      config: { 
+        dataTypes: ['current_il', 'max_il', 'il_history'],
+        alertThresholds: [2, 5, 10],
+        notifications: ['email', 'webhook', 'dashboard']
+      }
     }
   ],
   transforms: [
@@ -270,6 +306,66 @@ const nodeTemplates = {
         metrics: ['price_correlation', 'volume_correlation', 'volatility_correlation'],
         timeframes: ['1h', '1d', '7d', '30d']
       }
+    },
+    {
+      id: 'lp-performance-calculator',
+      label: 'LP Performance Calculator',
+      category: 'DeFi Analysis',
+      description: 'Calculate comprehensive LP position performance',
+      icon: <BarChart3 className="w-4 h-4" />,
+      config: { 
+        metrics: ['total_return', 'apy', 'fees_earned', 'hodl_comparison'],
+        timeframes: ['1d', '7d', '30d', 'inception'],
+        comparison: ['hodl', 'lending', 'staking']
+      }
+    },
+    {
+      id: 'il-calculator',
+      label: 'Impermanent Loss Calculator',
+      category: 'Risk Analysis',
+      description: 'Calculate and predict impermanent loss',
+      icon: <AlertTriangle className="w-4 h-4" />,
+      config: { 
+        calculations: ['current_il', 'projected_il', 'max_tolerable_il'],
+        scenarios: ['price_increase', 'price_decrease', 'volatility_spike'],
+        hedging: ['options', 'perps', 'rebalancing']
+      }
+    },
+    {
+      id: 'yield-optimizer',
+      label: 'Yield Optimizer',
+      category: 'Strategy',
+      description: 'Optimize LP positions for maximum yield',
+      icon: <Target className="w-4 h-4" />,
+      config: { 
+        strategies: ['concentration', 'range_management', 'fee_tier_selection'],
+        protocols: ['uniswap_v3', 'eulerswap', 'curve'],
+        optimization: ['apy', 'risk_adjusted', 'sharpe_ratio']
+      }
+    },
+    {
+      id: 'hedging-strategy',
+      label: 'Hedging Strategy Engine',
+      category: 'Risk Management',
+      description: 'Generate and execute hedging strategies',
+      icon: <CheckCircle className="w-4 h-4" />,
+      config: { 
+        strategies: ['options_collar', 'perp_hedge', 'delta_neutral'],
+        riskLevels: ['conservative', 'moderate', 'aggressive'],
+        instruments: ['options', 'futures', 'spot']
+      }
+    },
+    {
+      id: 'position-rebalancer',
+      label: 'Position Rebalancer',
+      category: 'Automation',
+      description: 'Automated LP position rebalancing',
+      icon: <GitBranch className="w-4 h-4" />,
+      config: { 
+        triggers: ['price_range', 'time_based', 'profit_target'],
+        frequency: ['hourly', 'daily', 'weekly'],
+        conditions: ['gas_price', 'slippage', 'volume']
+      }
     }
   ],
   outputs: [
@@ -355,6 +451,71 @@ const nodeTemplates = {
         alerts: ['depeg_risk', 'high_volatility', 'low_liquidity', 'backing_issues'],
         thresholds: { depeg: 0.02, volatility: 0.1, liquidity: 1000000 },
         channels: ['email', 'webhook', 'dashboard']
+      }
+    },
+    {
+      id: 'lp-dashboard',
+      label: 'LP Position Dashboard',
+      category: 'Visualization',
+      description: 'Comprehensive LP position monitoring dashboard',
+      icon: <BarChart3 className="w-4 h-4" />,
+      config: { 
+        widgets: ['position_overview', 'performance_chart', 'il_tracker', 'yield_metrics'],
+        refreshRate: '10s',
+        protocols: ['eulerswap', 'uniswap', 'sushiswap'],
+        layout: 'grid'
+      }
+    },
+    {
+      id: 'il-alert-system',
+      label: 'IL Alert System',
+      category: 'Notification',
+      description: 'Smart alerts for impermanent loss thresholds',
+      icon: <AlertTriangle className="w-4 h-4" />,
+      config: { 
+        thresholds: [2, 5, 10, 15],
+        alertTypes: ['threshold_breach', 'trend_warning', 'hedge_recommendation'],
+        channels: ['email', 'sms', 'webhook', 'push'],
+        urgency: ['low', 'medium', 'high', 'critical']
+      }
+    },
+    {
+      id: 'hedging-recommendations',
+      label: 'Hedging Recommendations',
+      category: 'Strategy',
+      description: 'AI-powered hedging strategy recommendations',
+      icon: <Target className="w-4 h-4" />,
+      config: { 
+        strategies: ['options', 'futures', 'rebalancing', 'correlation'],
+        riskProfiles: ['conservative', 'moderate', 'aggressive'],
+        effectiveness: ['high', 'medium', 'low'],
+        complexity: ['simple', 'intermediate', 'advanced']
+      }
+    },
+    {
+      id: 'performance-report',
+      label: 'Performance Report',
+      category: 'Reporting',
+      description: 'Detailed LP position performance reports',
+      icon: <Download className="w-4 h-4" />,
+      config: { 
+        formats: ['pdf', 'excel', 'csv', 'json'],
+        frequency: ['daily', 'weekly', 'monthly', 'on_demand'],
+        sections: ['summary', 'detailed_analysis', 'recommendations', 'charts'],
+        delivery: ['email', 'download', 'webhook']
+      }
+    },
+    {
+      id: 'yield-comparison-table',
+      label: 'Yield Comparison Table',
+      category: 'Visualization',
+      description: 'Compare yields across different LP strategies',
+      icon: <PieChart className="w-4 h-4" />,
+      config: { 
+        protocols: ['eulerswap', 'uniswap_v3', 'curve', 'balancer'],
+        metrics: ['apy', 'fees', 'rewards', 'risk_adjusted_return'],
+        timeframes: ['24h', '7d', '30d', '90d'],
+        sorting: ['apy_desc', 'risk_asc', 'volume_desc']
       }
     }
   ]

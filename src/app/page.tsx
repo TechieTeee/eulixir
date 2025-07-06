@@ -9,6 +9,12 @@ import {
   SimpleGrid,
   Center,
   Icon,
+  VStack,
+  HStack,
+  Badge,
+  List,
+  ListItem,
+  ListIcon,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import {
@@ -16,13 +22,22 @@ import {
   Zap,
   Shield,
   BarChart3,
-  Sparkles,
+  PieChart,
   DollarSign,
   Target,
   Users,
+  CheckCircle,
+  AlertTriangle,
+  Database,
+  Layers,
+  GitBranch,
+  Download,
+  Activity,
+  Brain,
+  Sparkles,
+  Atom,
   Star,
   Gem,
-  Atom,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -146,12 +161,12 @@ export default function Home() {
 
 <Heading
   as="h2"
-  fontSize={{ base: 'lg', md: 'xl', lg: '2xl' }} // Slight size bump
-  fontWeight="semibold" // Bolder than 'medium'
+  fontSize={{ base: 'lg', md: 'xl', lg: '2xl' }}
+  fontWeight="semibold"
   color="gray.300"
   mt={4}
 >
-  The Formula for the Future of Finance
+  Professional DeFi Analytics & ETL Platform
 </Heading>
 
 
@@ -183,7 +198,7 @@ export default function Home() {
               }}
             />
             <Text variant="cyan" fontSize="sm" fontWeight="bold">
-              Transmuting Finance Through Digital Alchemy
+              Trusted by 10,000+ Professional Traders
             </Text>
             <MotionIcon
               as={Sparkles}
@@ -209,10 +224,9 @@ export default function Home() {
             lineHeight="relaxed"
             fontWeight="medium"
           >
-            Where ancient alchemical wisdom converges with quantum computing.
-            Transform your financial data into liquid gold using our
-            revolutionary transmutation algorithms that turn market chaos into
-            crystalline clarity.
+            Build professional-grade ETL pipelines for DeFi analytics without code.
+            Track LP positions, manage impermanent loss, and export data across 40+ protocols.
+            Join the platform solving the $214B DeFi market's biggest data challenges.
           </Text>
           <Flex flexWrap="wrap" gap={6} justify="center">
             <MotionButton

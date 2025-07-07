@@ -413,6 +413,14 @@ export default function Dashboard() {
               LP Manager
             </Button>
             <Button
+              onClick={() => router.push('/vaults')}
+              colorScheme="orange"
+              variant="outline"
+              size="sm"
+            >
+              Vault Manager
+            </Button>
+            <Button
               onClick={() => router.push('/pipeline')}
               colorScheme="blue"
               variant="outline"

@@ -601,23 +601,10 @@ git push origin feature/amazing-alchemy
 - **🏛️ DAO Integration**: Community-governed protocol selection
 - **🔐 Privacy Alchemy**: Zero-knowledge data analysis options
 
-## 📜 License & Acknowledgments
-
-**License**: MIT - Build upon our alchemy freely
-
-**Acknowledgments**:
-- **Euler Labs** - For the innovative EulerSwap technology and ERC-4626 standards
-- **The DeFi Community** - For building the decentralized future
-- **Our Beta Alchemists** - Early users who helped refine the formula
-
----
-
 ## 🌟 Join the Alchemical Revolution
 
 Transform your DeFi data analysis from chaos to clarity. Experience the magic at **[eulixir.vercel.app](https://eulixir.vercel.app)**
 
 *Built with 🧪 by alchemists, for alchemists*
 
-[![Twitter Follow](https://img.shields.io/twitter/follow/eulixir?style=social)](https://twitter.com/eulixir)
-[![Discord](https://img.shields.io/discord/your-discord?logo=discord)](https://discord.gg/eulixir)
-[![GitHub Stars](https://img.shields.io/github/stars/yourusername/eulixir?style=social)](https://github.com/yourusername/eulixir)
+[![GitHub Stars](https://img.shields.io/github/stars/TechieTeee/eulixir?style=social)](https://github.com/TechieTeee/eulixir)

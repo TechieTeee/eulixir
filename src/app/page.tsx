@@ -23,7 +23,8 @@ import {
   DollarSign,
 } from "lucide-react";
 import Link from "next/link";
-import { WelcomeOwl } from "@/components/OwlMascot";
+import AlchemyHeroBackground from "@/components/AlchemyHeroBackground";
+import EulyHelper from "@/components/EulyHelper";
 
 const MotionBox = motion(Box);
 const MotionButton = motion(Button);
@@ -39,109 +40,8 @@ export default function Home() {
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
     >
-      {/* Particle Effects */}
-      <Box position="absolute" inset={0} pointerEvents="none" overflow="hidden">
-        {[...Array(20)].map((_, i) => (
-          <MotionBox
-            key={`purple-${i}`}
-            w="3px"
-            h="3px"
-            bg="mystic.400"
-            borderRadius="full"
-            opacity={0.8}
-            position="absolute"
-            left={`${Math.random() * 100}%`}
-            top={`${Math.random() * 100}%`}
-            animate={{ 
-              scale: [0.5, 1.2, 0.5], 
-              opacity: [0.3, 1, 0.3],
-              rotate: [0, 180, 360]
-            }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              delay: Math.random() * 4,
-            }}
-            boxShadow="0 0 8px rgba(168, 85, 247, 0.8)"
-            clipPath="polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)"
-          />
-        ))}
-        {[...Array(15)].map((_, i) => (
-          <MotionBox
-            key={`blue-${i}`}
-            w="2px"
-            h="2px"
-            bg="azure.400"
-            borderRadius="full"
-            opacity={0.7}
-            position="absolute"
-            left={`${Math.random() * 100}%`}
-            top={`${Math.random() * 100}%`}
-            animate={{ 
-              y: [0, -15, 0], 
-              opacity: [0.4, 1, 0.4],
-              scale: [0.8, 1.5, 0.8]
-            }}
-            transition={{
-              duration: 2.5,
-              repeat: Infinity,
-              delay: Math.random() * 3,
-            }}
-            boxShadow="0 0 6px rgba(59, 130, 246, 0.7)"
-            clipPath="polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)"
-          />
-        ))}
-        {[...Array(12)].map((_, i) => (
-          <MotionBox
-            key={`gold-${i}`}
-            w="4px"
-            h="4px"
-            bg="gold.400"
-            borderRadius="full"
-            opacity={0.9}
-            position="absolute"
-            left={`${Math.random() * 100}%`}
-            top={`${Math.random() * 100}%`}
-            animate={{ 
-              scale: [0.3, 1.8, 0.3], 
-              opacity: [0.3, 1, 0.3],
-              rotate: [0, 360, 720]
-            }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              delay: Math.random() * 5,
-            }}
-            boxShadow="0 0 10px rgba(251, 191, 36, 0.9)"
-            clipPath="polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)"
-          />
-        ))}
-        {[...Array(10)].map((_, i) => (
-          <MotionBox
-            key={`cyan-${i}`}
-            w="2.5px"
-            h="2.5px"
-            bg="cyan.400"
-            borderRadius="full"
-            opacity={0.8}
-            position="absolute"
-            left={`${Math.random() * 100}%`}
-            top={`${Math.random() * 100}%`}
-            animate={{ 
-              scale: [0.6, 1.4, 0.6], 
-              opacity: [0.4, 1, 0.4],
-              x: [0, 5, -5, 0]
-            }}
-            transition={{
-              duration: 3.5,
-              repeat: Infinity,
-              delay: Math.random() * 6,
-            }}
-            boxShadow="0 0 8px rgba(34, 211, 238, 0.8)"
-            clipPath="polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%)"
-          />
-        ))}
-      </Box>
+      {/* Enhanced Alchemy Hero Background */}
+      <AlchemyHeroBackground />
 
       <Box maxW="7xl" mx="auto" position="relative" zIndex={10} px={4}>
         {/* Hero Section */}
@@ -587,8 +487,8 @@ export default function Home() {
         </Flex>
       </Box>
       
-      {/* Welcome Owl Mascot */}
-      <WelcomeOwl />
+      {/* Euly Helper - Clickable guidance */}
+      <EulyHelper placement="bottom-right" />
     </MotionBox>
   );
 }

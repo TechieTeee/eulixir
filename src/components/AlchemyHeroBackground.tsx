@@ -31,11 +31,12 @@ const alchemyImages = [
   '/Test_Tube.png'
 ];
 
-const owlImages = [
-  '/Owl_1.png',
-  '/Owl_Looking_Down.png',
-  '/Owl_arms_at_side_looking_forward.png'
-];
+// Owl images available for future use
+// const owlImages = [
+//   '/Owl_1.png',
+//   '/Owl_Looking_Down.png',
+//   '/Owl_arms_at_side_looking_forward.png'
+// ];
 
 const MotionBox = motion(Box);
 

@@ -174,7 +174,7 @@ export default function EulyHelper({
               width="40px"
               height="40px"
             />
-            <Text>Euly's Guidance</Text>
+            <Text>Euly&apos;s Guidance</Text>
           </ModalHeader>
           <ModalCloseButton color="white" />
           

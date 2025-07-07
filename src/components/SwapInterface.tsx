@@ -14,17 +14,11 @@ import {
   CardHeader,
   Badge,
   Progress,
-  Stat,
-  StatLabel,
-  StatNumber,
-  StatHelpText,
   useToast,
   Alert,
   AlertIcon,
   AlertTitle,
   AlertDescription,
-  SimpleGrid,
-  Divider,
   Spinner,
   IconButton,
   Tooltip,
@@ -106,7 +100,7 @@ export default function SwapInterface({
       loadTokens();
       loadArbitrageOpportunities();
     }
-  }, [trader, address]);
+  }, [trader, address]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Auto-refresh quotes
   useEffect(() => {
@@ -117,7 +111,7 @@ export default function SwapInterface({
       
       return () => clearInterval(interval);
     }
-  }, [autoRefresh, quote, amountIn, tokenIn, tokenOut]);
+  }, [autoRefresh, quote, amountIn, tokenIn, tokenOut]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const loadTokens = async () => {
     if (!trader) return;
@@ -188,7 +182,7 @@ export default function SwapInterface({
     } finally {
       setLoadingQuote(false);
     }
-  }, [trader, tokenIn, tokenOut, amountIn, slippage, deadline]);
+  }, [trader, tokenIn, tokenOut, amountIn, slippage, deadline, toast]);
 
   // Get quote when inputs change
   useEffect(() => {

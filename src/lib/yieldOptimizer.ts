@@ -1,7 +1,7 @@
 import { ethers } from 'ethers';
 import { GraphQLClient } from 'graphql-request';
-import { EulerVaultConnector, VaultInfo } from './eulerVaultConnector';
-import { EulerSwapConnector, LPPosition } from './eulerSwapConnector';
+import { EulerVaultConnector } from './eulerVaultConnector';
+import { EulerSwapConnector } from './eulerSwapConnector';
 
 // Yield optimization interfaces
 interface YieldOpportunity {
@@ -172,9 +172,9 @@ export class YieldOptimizer {
       
       // Get opportunities from various protocols
       const [vaultOpps, lpOpps, crossProtocolOpps] = await Promise.all([
-        this.getVaultOpportunities(asset, amount),
-        this.getLPOpportunities(asset, amount),
-        this.getCrossProtocolOpportunities(asset, amount),
+        this.getVaultOpportunities(asset),
+        this.getLPOpportunities(),
+        this.getCrossProtocolOpportunities(),
       ]);
       
       opportunities.push(...vaultOpps, ...lpOpps, ...crossProtocolOpps);
@@ -365,21 +365,17 @@ export class YieldOptimizer {
     rebalanceActions: RebalanceAction[];
   }> {
     try {
-      // Get current positions
-      const [vaultPositions, lpPositions] = await Promise.all([
+      // Get current positions (for future use in real implementation)
+      await Promise.all([
         this.vaultConnector.getUserVaultPositions(userAddress),
         this.swapConnector.getUserLPPositions(userAddress),
       ]);
 
       // Calculate portfolio analytics
-      const analytics = await this.calculateYieldAnalytics(vaultPositions, lpPositions);
+      const analytics = await this.calculateYieldAnalytics();
       
       // Generate rebalance recommendations
-      const rebalanceActions = await this.generateRebalanceActions(
-        vaultPositions, 
-        lpPositions, 
-        analytics
-      );
+      const rebalanceActions = await this.generateRebalanceActions(analytics);
 
       return { analytics, rebalanceActions };
     } catch (error) {
@@ -398,7 +394,7 @@ export class YieldOptimizer {
     }
 
     try {
-      const { analytics, rebalanceActions } = await this.analyzePortfolio(userAddress);
+      const { rebalanceActions } = await this.analyzePortfolio(userAddress);
       
       // Filter actions based on config
       const autoActions = rebalanceActions.filter(action => {
@@ -460,7 +456,7 @@ export class YieldOptimizer {
   }
 
   // Private helper methods
-  private async getVaultOpportunities(asset: string, amount: string): Promise<YieldOpportunity[]> {
+  private async getVaultOpportunities(asset: string): Promise<YieldOpportunity[]> {
     const vaults = await this.vaultConnector.getAvailableVaults();
     const opportunities: YieldOpportunity[] = [];
     
@@ -497,7 +493,7 @@ export class YieldOptimizer {
     return opportunities;
   }
 
-  private async getLPOpportunities(asset: string, amount: string): Promise<YieldOpportunity[]> {
+  private async getLPOpportunities(): Promise<YieldOpportunity[]> {
     // Mock LP opportunities
     return [
       {
@@ -528,7 +524,7 @@ export class YieldOptimizer {
     ];
   }
 
-  private async getCrossProtocolOpportunities(asset: string, amount: string): Promise<YieldOpportunity[]> {
+  private async getCrossProtocolOpportunities(): Promise<YieldOpportunity[]> {
     // Mock cross-protocol opportunities
     return [
       {
@@ -559,7 +555,7 @@ export class YieldOptimizer {
     ];
   }
 
-  private async calculateYieldAnalytics(vaultPositions: any[], lpPositions: any[]): Promise<YieldAnalytics> {
+  private async calculateYieldAnalytics(): Promise<YieldAnalytics> {
     // Mock analytics calculation
     const totalValue = 50000;
     
@@ -592,11 +588,7 @@ export class YieldOptimizer {
     };
   }
 
-  private async generateRebalanceActions(
-    vaultPositions: any[], 
-    lpPositions: any[], 
-    analytics: YieldAnalytics
-  ): Promise<RebalanceAction[]> {
+  private async generateRebalanceActions(analytics: YieldAnalytics): Promise<RebalanceAction[]> {
     const actions: RebalanceAction[] = [];
     
     // Mock rebalance action

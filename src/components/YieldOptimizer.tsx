@@ -59,7 +59,7 @@ import {
   AccordionIcon,
   Icon,
 } from '@chakra-ui/react';
-import { CheckIcon, WarningIcon, InfoIcon } from '@chakra-ui/icons';
+import { CheckIcon, WarningIcon } from '@chakra-ui/icons';
 import { useAccount } from 'wagmi';
 import { 
   YieldOptimizer as YieldOptimizerEngine,
@@ -78,7 +78,6 @@ interface YieldOptimizerProps {
 export default function YieldOptimizer({ onOptimizationComplete }: YieldOptimizerProps) {
   const { address, isConnected } = useAccount();
   const { isOpen: isStrategyOpen, onOpen: onStrategyOpen, onClose: onStrategyClose } = useDisclosure();
-  const { isOpen: isRebalanceOpen, onOpen: onRebalanceOpen, onClose: onRebalanceClose } = useDisclosure();
   const toast = useToast();
 
   const [optimizer, setOptimizer] = useState<YieldOptimizerEngine | null>(null);
@@ -124,7 +123,7 @@ export default function YieldOptimizer({ onOptimizationComplete }: YieldOptimize
     if (optimizer) {
       loadData();
     }
-  }, [optimizer, address, selectedAsset, amount, riskTolerance, portfolioValue]);
+  }, [optimizer, address, selectedAsset, amount, riskTolerance, portfolioValue]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const loadData = async () => {
     if (!optimizer) return;
@@ -134,7 +133,7 @@ export default function YieldOptimizer({ onOptimizationComplete }: YieldOptimize
       // Load opportunities and strategies
       const [oppsData, strategiesData] = await Promise.all([
         optimizer.findYieldOpportunities(selectedAsset, amount, riskTolerance),
-        optimizer.generateOptimizationStrategies(portfolioValue, riskTolerance as any),
+        optimizer.generateOptimizationStrategies(portfolioValue, riskTolerance as 'Conservative' | 'Moderate' | 'Aggressive'),
       ]);
       
       setOpportunities(oppsData);
@@ -645,7 +644,7 @@ export default function YieldOptimizer({ onOptimizationComplete }: YieldOptimize
                   <CardHeader>
                     <HStack justify="space-between">
                       <Text fontSize="lg" fontWeight="bold">Recommended Actions</Text>
-                      <Button size="sm" colorScheme="blue" onClick={onRebalanceOpen}>
+                      <Button size="sm" colorScheme="blue">
                         Review All
                       </Button>
                     </HStack>

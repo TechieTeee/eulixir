@@ -292,7 +292,7 @@ export class EulerSwapTrader {
       execution.blockNumber = receipt.blockNumber;
 
       // Parse actual output amount from logs
-      execution.actualOutputAmount = await this.parseOutputAmountFromReceipt(receipt, params.tokenOut);
+      execution.actualOutputAmount = await this.parseOutputAmountFromReceipt();
 
       return execution;
     } catch (error) {
@@ -512,7 +512,7 @@ export class EulerSwapTrader {
     return path;
   }
 
-  private async parseOutputAmountFromReceipt(receipt: ethers.ContractReceipt, outputToken: string): Promise<string> {
+  private async parseOutputAmountFromReceipt(): Promise<string> {
     // Mock parsing - in real implementation would parse Transfer events
     return '0';
   }

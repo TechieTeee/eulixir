@@ -23,6 +23,7 @@ import {
   DollarSign,
 } from "lucide-react";
 import Link from "next/link";
+import { WelcomeOwl } from "@/components/OwlMascot";
 
 const MotionBox = motion(Box);
 const MotionButton = motion(Button);
@@ -585,6 +586,9 @@ export default function Home() {
           </Text>
         </Flex>
       </Box>
+      
+      {/* Welcome Owl Mascot */}
+      <WelcomeOwl />
     </MotionBox>
   );
 }

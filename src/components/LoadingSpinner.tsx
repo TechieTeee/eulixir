@@ -2,6 +2,7 @@
 
 import { Box, Spinner, Text, VStack } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
+import { LoadingOwl } from './OwlMascot';
 
 const MotionBox = motion(Box);
 
@@ -31,7 +32,7 @@ export default function LoadingSpinner({
       exit={{ opacity: 0 }}
       transition={{ duration: 0.2 }}
     >
-      <VStack spacing={4}>
+      <VStack spacing={6}>
         <Spinner 
           size={size} 
           color="purple.400" 
@@ -45,6 +46,7 @@ export default function LoadingSpinner({
         >
           {message}
         </Text>
+        <LoadingOwl />
       </VStack>
     </MotionBox>
   );

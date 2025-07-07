@@ -55,6 +55,7 @@ import {
   ArbitrageOpportunity 
 } from '@/lib/eulerSwapTrader';
 import { getCurrentNetwork } from '@/config';
+import { SuccessOwl } from './OwlMascot';
 
 interface SwapInterfaceProps {
   onSwapComplete?: (hash: string) => void;
@@ -85,6 +86,7 @@ export default function SwapInterface({
   const [deadline, setDeadline] = useState(20);
   const [autoRefresh, setAutoRefresh] = useState(true);
   const [arbitrageOpps, setArbitrageOpps] = useState<ArbitrageOpportunity[]>([]);
+  const [showSuccessOwl, setShowSuccessOwl] = useState(false);
 
   // Initialize trader
   useEffect(() => {
@@ -215,6 +217,10 @@ export default function SwapInterface({
         duration: 5000,
       });
 
+      // Show success owl animation
+      setShowSuccessOwl(true);
+      setTimeout(() => setShowSuccessOwl(false), 3000);
+
       if (onSwapComplete) {
         onSwapComplete(execution.hash);
       }
@@ -276,7 +282,14 @@ export default function SwapInterface({
   };
 
   return (
-    <Box>
+    <Box position="relative">
+      {/* Success Owl Animation */}
+      {showSuccessOwl && (
+        <Box position="absolute" top="50%" left="50%" transform="translate(-50%, -50%)" zIndex={1000}>
+          <SuccessOwl />
+        </Box>
+      )}
+      
       <VStack spacing={6} align="stretch">
         {/* Header */}
         <HStack justify="space-between" align="center">

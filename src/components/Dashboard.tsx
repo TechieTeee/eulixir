@@ -36,6 +36,8 @@ import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useAccount } from 'wagmi';
 import LoadingSpinner from './LoadingSpinner';
+import { DashboardBackground } from './AlchemyBackground';
+import { HeaderOwl, CornerOwl, LoadingOwl } from './OwlMascot';
 
 // Lazy load heavy components
 const WalletConnection = lazy(() => import('./WalletConnection'));
@@ -343,6 +345,7 @@ export default function Dashboard() {
           <VStack spacing={4}>
             <Spinner size="xl" color="purple.400" thickness="4px" />
             <Text color="gray.400" fontSize="lg">Loading your DeFi dashboard...</Text>
+            <LoadingOwl />
           </VStack>
         </Center>
       </Box>
@@ -388,19 +391,28 @@ export default function Dashboard() {
         animation="float 20s ease-in-out infinite"
       />
       
+      {/* Alchemy Floating Background */}
+      <DashboardBackground />
+      
+      {/* Corner Owl Mascot */}
+      <CornerOwl placement="top-left" />
+      
       <Box position="relative" zIndex={1}>
         {/* Header */}
         <Flex justify="space-between" align="center" mb={8}>
           <VStack align="start" spacing={2}>
-            <Heading 
-              as="h1" 
-              size="2xl" 
-              bgGradient="linear(to-r, #9333EA, #3B82F6)"
-              bgClip="text"
-              fontWeight="bold"
-            >
-              Eulixir Analytics
-            </Heading>
+            <HStack spacing={3} align="center">
+              <Heading 
+                as="h1" 
+                size="2xl" 
+                bgGradient="linear(to-r, #9333EA, #3B82F6)"
+                bgClip="text"
+                fontWeight="bold"
+              >
+                Eulixir Analytics
+              </Heading>
+              <HeaderOwl />
+            </HStack>
             <Text color="gray.400" fontSize="lg">
               Professional DeFi Portfolio Management
             </Text>

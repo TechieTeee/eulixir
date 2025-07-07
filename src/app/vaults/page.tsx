@@ -3,6 +3,8 @@
 import { Box, VStack, HStack, Text, Button, useColorModeValue } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
 import VaultManager from '@/components/VaultManager';
+import { VaultBackground } from '@/components/AlchemyBackground';
+import { CornerOwl, HeaderOwl } from '@/components/OwlMascot';
 
 export default function VaultsPage() {
   const router = useRouter();
@@ -32,19 +34,28 @@ export default function VaultsPage() {
         animation="float 20s ease-in-out infinite"
       />
       
+      {/* Alchemy Floating Background */}
+      <VaultBackground />
+      
+      {/* Corner Owl Mascot */}
+      <CornerOwl placement="bottom-left" />
+      
       <Box position="relative" zIndex={1} p={8}>
         {/* Header */}
         <VStack spacing={6} align="stretch">
           <HStack justify="space-between" align="center">
             <VStack align="start" spacing={2}>
-              <Text
-                fontSize="3xl"
-                fontWeight="bold"
-                bgGradient="linear(to-r, #9333EA, #3B82F6)"
-                bgClip="text"
-              >
-                EulerSwap Vault Manager
-              </Text>
+              <HStack spacing={3} align="center">
+                <Text
+                  fontSize="3xl"
+                  fontWeight="bold"
+                  bgGradient="linear(to-r, #9333EA, #3B82F6)"
+                  bgClip="text"
+                >
+                  EulerSwap Vault Manager
+                </Text>
+                <HeaderOwl />
+              </HStack>
               <Text color="gray.400" fontSize="lg">
                 Manage your vault positions and strategies
               </Text>

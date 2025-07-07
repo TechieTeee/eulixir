@@ -30,6 +30,7 @@ import {
   StatArrow,
   Progress,
   Avatar,
+  useToast,
 } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
@@ -40,6 +41,7 @@ import LoadingSpinner from './LoadingSpinner';
 const WalletConnection = lazy(() => import('./WalletConnection'));
 const Line = lazy(() => import('react-chartjs-2').then(module => ({ default: module.Line })));
 const Doughnut = lazy(() => import('react-chartjs-2').then(module => ({ default: module.Doughnut })));
+const SwapInterface = lazy(() => import('./SwapInterface'));
 import {
   Chart as ChartJS,
   LineElement,
@@ -148,6 +150,7 @@ export default function Dashboard() {
   const [selectedTimeframe, setSelectedTimeframe] = useState<string>('7d');
   const router = useRouter();
   const { address } = useAccount();
+  const toast = useToast();
 
   // Fetch data from API
   const fetchData = useCallback(async (showRefresh = false) => {
@@ -477,6 +480,34 @@ export default function Dashboard() {
             description="Protocol risk level"
           />
         </SimpleGrid>
+
+        {/* Swap Interface */}
+        <MotionCard
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          bg="rgba(26, 32, 44, 0.8)"
+          backdropFilter="blur(10px)"
+          borderRadius="xl"
+          border="1px solid"
+          borderColor="rgba(255, 255, 255, 0.1)"
+          overflow="hidden"
+          mb={8}
+        >
+          <CardBody p={6}>
+            <Suspense fallback={<LoadingSpinner message="Loading swap interface..." size="md" />}>
+              <SwapInterface onSwapComplete={(hash) => {
+                toast({
+                  title: 'Swap completed',
+                  description: `Transaction: ${hash}`,
+                  status: 'success',
+                  duration: 5000,
+                });
+                fetchData(true);
+              }} />
+            </Suspense>
+          </CardBody>
+        </MotionCard>
 
         {/* Main Content Grid */}
         <SimpleGrid columns={{ base: 1, xl: 2 }} spacing={8} mb={8}>

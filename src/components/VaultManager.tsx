@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import {
   Box,
   VStack,
@@ -52,6 +52,7 @@ import {
   VaultStrategy 
 } from '@/lib/eulerVaultConnector';
 import { getCurrentNetwork } from '@/config';
+import YieldOptimizer from './YieldOptimizer';
 
 interface VaultManagerProps {
   onVaultAction?: (action: string, vaultAddress: string, amount: string) => void;
@@ -259,6 +260,7 @@ export default function VaultManager({ onVaultAction }: VaultManagerProps) {
             <Tab>Available Vaults</Tab>
             <Tab>My Positions</Tab>
             <Tab>Strategies</Tab>
+            <Tab>Yield Optimizer</Tab>
           </TabList>
 
           <TabPanels>
@@ -480,6 +482,17 @@ export default function VaultManager({ onVaultAction }: VaultManagerProps) {
                   </Card>
                 ))}
               </SimpleGrid>
+            </TabPanel>
+
+            {/* Yield Optimizer Tab */}
+            <TabPanel>
+              <Suspense fallback={<Spinner size="xl" />}>
+                <YieldOptimizer onOptimizationComplete={(strategy) => {
+                  console.log('Optimization strategy completed:', strategy);
+                  // Refresh vault data when optimization completes
+                  loadVaultData();
+                }} />
+              </Suspense>
             </TabPanel>
           </TabPanels>
         </Tabs>

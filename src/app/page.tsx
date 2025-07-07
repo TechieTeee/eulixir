@@ -16,10 +16,8 @@ import {
   Shield,
   BarChart3,
   Target,
-  Users,
   GitBranch,
   Activity,
-  Star,
   DollarSign,
 } from "lucide-react";
 import Link from "next/link";
@@ -318,7 +316,7 @@ export default function Home() {
                 Proven Results from Our Alchemical Laboratory
               </Heading>
               <Text variant="platinum" fontSize="lg" maxW="3xl">
-                Real DeFi insights and Eulixir's powerful capabilities proven in the field.
+                Real DeFi insights and Eulixir&apos;s powerful capabilities proven in the field.
                 Our mystical data transformations deliver tangible results for DeFi analysts and researchers.
               </Text>
             </Box>

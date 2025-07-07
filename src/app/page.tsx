@@ -314,12 +314,12 @@ export default function Home() {
         >
           <Flex direction="column" align="center" gap={12}>
             <Box textAlign="center" gap={4}>
-              <Heading as="h2" size="2xl" variant="glowing" maxW="2xl">
-                The Grand Alchemical Results
+              <Heading as="h2" size="2xl" variant="glowing" maxW="4xl">
+                Proven Results from Our Alchemical Laboratory
               </Heading>
-              <Text variant="platinum" fontSize="lg">
-                Behold the transmuted treasures of our mystical laboratory!
-                Witness the golden ratio of success achieved by our wise owl alchemists.
+              <Text variant="platinum" fontSize="lg" maxW="3xl">
+                Real DeFi insights and Eulixir's powerful capabilities proven in the field.
+                Our mystical data transformations deliver tangible results for DeFi analysts and researchers.
               </Text>
             </Box>
             <SimpleGrid columns={{ base: 2, md: 4 }} spacing={12} w="full">
@@ -336,24 +336,16 @@ export default function Home() {
                   <Icon as={DollarSign} w={8} h={8} color="gold.400" />
                 </Center>
                 <Text fontSize="4xl" fontWeight="bold" color="gold.400">
-                  $214B
+                  $180B+
                 </Text>
                 <Text variant="dataLabel">
-                  Liquid Gold Transmuted
+                  Total Value Locked in DeFi<br/>
+                  <Text as="span" fontSize="xs" opacity={0.7}>
+                    (DefiLlama, 2024)
+                  </Text>
                 </Text>
               </Box>
               <Box textAlign="center" gap={4}>
-                <Center
-                  p={4}
-                  borderRadius="full"
-                  bgGradient="linear(to-br, azure.500, transparent)"
-                  border="2px"
-                  borderColor="azure.400"
-                  w="fit-content"
-                  mx="auto"
-                >
-                  <Icon as={Users} w={8} h={8} color="azure.400" />
-                </Center>
                 <Center
                   p={4}
                   borderRadius="full"
@@ -368,7 +360,12 @@ export default function Home() {
                 <Text fontSize="4xl" fontWeight="bold" color="azure.400">
                   40+
                 </Text>
-                <Text variant="dataLabel">Mystical Protocol Essences</Text>
+                <Text variant="dataLabel">
+                  Integrated DeFi Protocols<br/>
+                  <Text as="span" fontSize="xs" opacity={0.7}>
+                    Uniswap, Aave, Compound, Euler & more
+                  </Text>
+                </Text>
               </Box>
               <Box textAlign="center" gap={4}>
                 <Center
@@ -380,23 +377,17 @@ export default function Home() {
                   w="fit-content"
                   mx="auto"
                 >
-                  <Icon as={Target} w={8} h={8} color="cyan.400" />
-                </Center>
-                <Center
-                  p={4}
-                  borderRadius="full"
-                  bgGradient="linear(to-br, cyan.500, transparent)"
-                  border="2px"
-                  borderColor="cyan.400"
-                  w="fit-content"
-                  mx="auto"
-                >
-                  <Icon as={Star} w={8} h={8} color="cyan.400" />
+                  <Icon as={Activity} w={8} h={8} color="cyan.400" />
                 </Center>
                 <Text fontSize="4xl" fontWeight="bold" color="cyan.400">
-                  47%
+                  &lt;15s
                 </Text>
-                <Text variant="dataLabel">Crystal Ball Accuracy Boost*</Text>
+                <Text variant="dataLabel">
+                  Real-Time Data Processing<br/>
+                  <Text as="span" fontSize="xs" opacity={0.7}>
+                    Sub-15 second pipeline execution
+                  </Text>
+                </Text>
               </Box>
               <Box textAlign="center" gap={4}>
                 <Center
@@ -408,23 +399,17 @@ export default function Home() {
                   w="fit-content"
                   mx="auto"
                 >
-                  <Icon as={Star} w={8} h={8} color="mystic.400" />
-                </Center>
-                <Center
-                  p={4}
-                  borderRadius="full"
-                  bgGradient="linear(to-br, mystic.500, transparent)"
-                  border="2px"
-                  borderColor="mystic.400"
-                  w="fit-content"
-                  mx="auto"
-                >
-                  <Icon as={TrendingUp} w={8} h={8} color="mystic.400" />
+                  <Icon as={BarChart3} w={8} h={8} color="mystic.400" />
                 </Center>
                 <Text fontSize="4xl" fontWeight="bold" color="mystic.400">
-                  19.2%
+                  4
                 </Text>
-                <Text variant="dataLabel">Flame of Market Dominance</Text>
+                <Text variant="dataLabel">
+                  Export Format Alchemies<br/>
+                  <Text as="span" fontSize="xs" opacity={0.7}>
+                    CSV, Excel, JSON, PDF with custom schemas
+                  </Text>
+                </Text>
               </Box>
             </SimpleGrid>
           </Flex>

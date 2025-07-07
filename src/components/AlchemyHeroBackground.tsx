@@ -168,10 +168,11 @@ export default function AlchemyHeroBackground() {
         </MotionBox>
       ))}
       
-      {/* Magical particle effects to enhance alchemy theme */}
-      {[...Array(8)].map((_, i) => (
+      {/* Enhanced magical particle effects */}
+      {/* Purple sparkles */}
+      {[...Array(12)].map((_, i) => (
         <MotionBox
-          key={`sparkle-${i}`}
+          key={`sparkle-purple-${i}`}
           position="absolute"
           width="3px"
           height="3px"
@@ -185,13 +186,97 @@ export default function AlchemyHeroBackground() {
             rotate: [0, 180, 360],
           }}
           transition={{
-            duration: 8 + Math.random() * 4, // Slower: 8-12 seconds
+            duration: 8 + Math.random() * 4,
             repeat: Infinity,
-            delay: Math.random() * 8, // Longer delays
+            delay: Math.random() * 8,
           }}
           style={{
             boxShadow: '0 0 8px rgba(147, 51, 234, 0.6)',
             zIndex: 5,
+          }}
+        />
+      ))}
+      
+      {/* Golden light particles */}
+      {[...Array(10)].map((_, i) => (
+        <MotionBox
+          key={`sparkle-gold-${i}`}
+          position="absolute"
+          width="2px"
+          height="2px"
+          bg="gold.400"
+          borderRadius="full"
+          left={`${5 + Math.random() * 90}%`}
+          top={`${5 + Math.random() * 90}%`}
+          animate={{
+            scale: [0, 2, 0],
+            opacity: [0, 0.9, 0],
+            y: [0, -20, 0],
+          }}
+          transition={{
+            duration: 6 + Math.random() * 3,
+            repeat: Infinity,
+            delay: Math.random() * 6,
+          }}
+          style={{
+            boxShadow: '0 0 10px rgba(251, 191, 36, 0.8)',
+            zIndex: 5,
+          }}
+        />
+      ))}
+      
+      {/* Cyan mystical dots */}
+      {[...Array(8)].map((_, i) => (
+        <MotionBox
+          key={`sparkle-cyan-${i}`}
+          position="absolute"
+          width="1.5px"
+          height="1.5px"
+          bg="cyan.400"
+          borderRadius="full"
+          left={`${15 + Math.random() * 70}%`}
+          top={`${15 + Math.random() * 70}%`}
+          animate={{
+            scale: [0, 1.8, 0],
+            opacity: [0, 0.7, 0],
+            x: [0, 10, -10, 0],
+          }}
+          transition={{
+            duration: 10 + Math.random() * 5,
+            repeat: Infinity,
+            delay: Math.random() * 10,
+          }}
+          style={{
+            boxShadow: '0 0 6px rgba(34, 211, 238, 0.7)',
+            zIndex: 5,
+          }}
+        />
+      ))}
+      
+      {/* Floating orbs */}
+      {[...Array(6)].map((_, i) => (
+        <MotionBox
+          key={`orb-${i}`}
+          position="absolute"
+          width="4px"
+          height="4px"
+          bg="white"
+          borderRadius="full"
+          left={`${20 + Math.random() * 60}%`}
+          top={`${20 + Math.random() * 60}%`}
+          animate={{
+            scale: [0.5, 1, 0.5],
+            opacity: [0.2, 0.6, 0.2],
+            rotate: [0, 360],
+          }}
+          transition={{
+            duration: 12 + Math.random() * 6,
+            repeat: Infinity,
+            delay: Math.random() * 12,
+          }}
+          style={{
+            boxShadow: '0 0 12px rgba(255, 255, 255, 0.5)',
+            zIndex: 4,
           }}
         />
       ))}

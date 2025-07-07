@@ -137,7 +137,7 @@ export default function AlchemyBackground({
     }
 
     setElements(newElements);
-  }, [density, theme, windowSize]);
+  }, [density, theme, windowSize]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Animation variants
   const floatingVariants = {

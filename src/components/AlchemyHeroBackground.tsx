@@ -17,34 +17,31 @@ interface AlchemyElement {
   zIndex: number;
 }
 
+// Move arrays outside component to prevent re-creation on every render
+const alchemyImages = [
+  '/Beaker_1.png',
+  '/Beaker_2.png',
+  '/Beaker_4.png',
+  '/Beaker_5.png',
+  '/Beaker_6.png',
+  '/Beaker_7.png',
+  '/Beaker_8.png',
+  '/Beaker_9.png',
+  '/Beaker_10.png',
+  '/Test_Tube.png'
+];
+
+const owlImages = [
+  '/Owl_1.png',
+  '/Owl_Looking_Down.png',
+  '/Owl_arms_at_side_looking_forward.png'
+];
+
 const MotionBox = motion(Box);
 
 export default function AlchemyHeroBackground() {
   const [elements, setElements] = useState<AlchemyElement[]>([]);
   const [windowSize, setWindowSize] = useState({ width: 1200, height: 800 });
-
-  // All available alchemy images
-  const alchemyImages = [
-    '/Beaker_1.png',
-    '/Beaker_2.png',
-    '/Beaker_4.png',
-    '/Beaker_5.png',
-    '/Beaker_6.png',
-    '/Beaker_7.png',
-    '/Beaker_8.png',
-    '/Beaker_9.png',
-    '/Beaker_10.png',
-    '/Test_Tube.png'
-  ];
-  
-  console.log('AlchemyImages array:', alchemyImages);
-
-  // A few owl images for accent
-  const owlImages = [
-    '/Owl_1.png',
-    '/Owl_Looking_Down.png',
-    '/Owl_arms_at_side_looking_forward.png'
-  ];
 
   // Update window size
   useEffect(() => {
@@ -62,86 +59,47 @@ export default function AlchemyHeroBackground() {
 
   // Generate floating alchemy elements
   useEffect(() => {
+    console.log('Starting element generation, windowSize:', windowSize);
     const newElements: AlchemyElement[] = [];
     
-    // Define placement zones across the entire screen
+    // Placement zones avoiding the center hero text area
     const placementZones = [
-      // Left side zones
-      { x: 0, y: 0, width: 150, height: 200 },
-      { x: 0, y: windowSize.height * 0.2, width: 120, height: 150 },
-      { x: 0, y: windowSize.height * 0.5, width: 140, height: 180 },
-      { x: 0, y: windowSize.height * 0.75, width: 130, height: 160 },
-      
-      // Right side zones
-      { x: windowSize.width - 150, y: 0, width: 150, height: 200 },
-      { x: windowSize.width - 120, y: windowSize.height * 0.2, width: 120, height: 150 },
-      { x: windowSize.width - 140, y: windowSize.height * 0.5, width: 140, height: 180 },
-      { x: windowSize.width - 130, y: windowSize.height * 0.75, width: 130, height: 160 },
-      
-      // Top zones (between left and right)
-      { x: windowSize.width * 0.2, y: 0, width: 100, height: 120 },
-      { x: windowSize.width * 0.4, y: 0, width: 80, height: 100 },
-      { x: windowSize.width * 0.6, y: 0, width: 90, height: 110 },
-      { x: windowSize.width * 0.8, y: 0, width: 85, height: 105 },
-      
-      // Bottom zones
-      { x: windowSize.width * 0.15, y: windowSize.height - 120, width: 100, height: 120 },
-      { x: windowSize.width * 0.35, y: windowSize.height - 100, width: 80, height: 100 },
-      { x: windowSize.width * 0.55, y: windowSize.height - 110, width: 90, height: 110 },
-      { x: windowSize.width * 0.75, y: windowSize.height - 105, width: 85, height: 105 },
-      
-      // Mid-level floating zones (sparse placement)
-      { x: windowSize.width * 0.1, y: windowSize.height * 0.3, width: 80, height: 80 },
-      { x: windowSize.width * 0.9, y: windowSize.height * 0.35, width: 80, height: 80 },
-      { x: windowSize.width * 0.05, y: windowSize.height * 0.65, width: 70, height: 70 },
-      { x: windowSize.width * 0.95, y: windowSize.height * 0.6, width: 70, height: 70 },
+      { x: 50, y: 50, width: 200, height: 200 }, // Top-left
+      { x: windowSize.width - 250, y: 50, width: 200, height: 200 }, // Top-right
+      { x: 50, y: windowSize.height - 250, width: 200, height: 200 }, // Bottom-left
+      { x: windowSize.width - 250, y: windowSize.height - 250, width: 200, height: 200 }, // Bottom-right
+      { x: windowSize.width - 300, y: windowSize.height * 0.4, width: 180, height: 150 }, // Right-middle (moved away from center)
     ];
 
-    // Generate 20-25 elements for rich atmosphere
-    const elementCount = 23;
+    // Generate 5 elements for testing
+    const elementCount = 5;
     
     for (let i = 0; i < elementCount; i++) {
       const zone = placementZones[i % placementZones.length];
       
-      // Force first 5 elements to be beakers for testing, rest random
-      const useOwl = i < 5 ? false : Math.random() < 0.15;
-      const imagePool = useOwl ? owlImages : alchemyImages;
-      const randomImage = imagePool[Math.floor(Math.random() * imagePool.length)];
-      console.log(`Element ${i}: useOwl=${useOwl}, selectedImage=${randomImage}, imagePool:`, imagePool);
+      // Force all to be beakers for testing
+      const randomImage = alchemyImages[i % alchemyImages.length];
+      console.log(`Creating element ${i}: image=${randomImage}, zone:`, zone);
       
-      // Size variation based on image type and position
-      const isTestTube = randomImage.includes('Test_Tube');
-      const isOwl = owlImages.includes(randomImage);
-      
-      let baseSize = 45;
-      if (isTestTube) baseSize = 35; // Test tubes smaller
-      if (isOwl) baseSize = 55; // Owls slightly larger
-      
-      // Larger elements for corner zones, smaller for mid-screen
-      const isCornerZone = i < 8; // First 8 zones are corners
-      const sizeMultiplier = isCornerZone ? 1.2 : 0.8;
-      const finalSize = baseSize * sizeMultiplier + Math.random() * 25; // Increased size for testing
-
-      // Ensure element fits in zone
-      const elementSize = Math.min(finalSize, zone.width - 10, zone.height - 10);
+      const elementSize = 80; // Fixed size for testing
       
       newElements.push({
         id: `alchemy-${i}`,
         src: randomImage,
         size: elementSize,
-        x: zone.x + Math.random() * (zone.width - elementSize),
-        y: zone.y + Math.random() * (zone.height - elementSize),
-        duration: 12 + Math.random() * 8, // 12-20 seconds
-        delay: Math.random() * 8, // 0-8 second delay
-        opacity: 0.4 + Math.random() * 0.3, // 0.4-0.7 opacity for testing
-        rotation: Math.random() * 30 - 15, // -15 to +15 degrees
-        zIndex: isOwl ? 3 : Math.random() < 0.3 ? 2 : 1, // Some elements higher
+        x: zone.x + 50, // Fixed position within zone
+        y: zone.y + 50,
+        duration: 15,
+        delay: i * 0.5, // Staggered delays
+        opacity: 0.8, // High opacity for testing
+        rotation: 0, // No rotation for testing
+        zIndex: 2,
       });
     }
 
-    console.log('Generated elements:', newElements.length, newElements.slice(0, 3));
+    console.log('Generated elements:', newElements);
     setElements(newElements);
-  }, [windowSize]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [windowSize]);
 
   // Enhanced animation variants
   const alchemyVariants = {
@@ -185,22 +143,12 @@ export default function AlchemyHeroBackground() {
           initial={{
             x: element.x,
             y: element.y,
-            opacity: 0,
-            scale: 0.8,
+            opacity: element.opacity,
+            scale: 1,
             rotate: element.rotation
           }}
           style={{
             zIndex: element.zIndex,
-          }}
-          onAnimationStart={() => {
-            // Staggered fade-in animation
-            setTimeout(() => {
-              const el = document.getElementById(element.id);
-              if (el) {
-                el.style.opacity = element.opacity.toString();
-                el.style.transition = 'opacity 3s ease-in-out';
-              }
-            }, element.delay * 1000);
           }}
         >
           <Image
@@ -237,9 +185,9 @@ export default function AlchemyHeroBackground() {
             rotate: [0, 180, 360],
           }}
           transition={{
-            duration: 4 + Math.random() * 3,
+            duration: 8 + Math.random() * 4, // Slower: 8-12 seconds
             repeat: Infinity,
-            delay: Math.random() * 5,
+            delay: Math.random() * 8, // Longer delays
           }}
           style={{
             boxShadow: '0 0 8px rgba(147, 51, 234, 0.6)',

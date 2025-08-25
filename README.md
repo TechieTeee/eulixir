@@ -1,4 +1,5 @@
-# 🧪 Eulixir: The Alchemist's Laboratory for DeFi Data
+# 🧪 Eulixir
+The Alchemist's Laboratory for DeFi Data
 
 > *Transform raw DeFi data into liquid gold through mystical ETL alchemy*
 

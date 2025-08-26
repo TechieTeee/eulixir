@@ -28,29 +28,6 @@ The decentralized finance ecosystem has experienced explosive growth, but data a
 *Research shows that **89% of DeFi analysts** rely on manual processes and disparate tools, leading to delayed insights and missed opportunities⁷*
 
 ---
-**Sources:**
-1. [DefiLlama Analytics, December 2024](https://defillama.com)
-2. [DeFi Pulse Research Report, 2024](https://defipulse.com/research)
-3. [Chainalysis DeFi Report, 2024](https://chainalysis.com/reports)
-4. [Messari State of DeFi Q4 2024](https://messari.io/research)
-5. [Harvard Business Review: Data Scientist Survey, 2024](https://hbr.org/data-science-survey)
-6. [Nansen IL Analytics Report, 2023](https://nansen.ai/research)
-7. [ConsenSys DeFi Developer Survey, 2024](https://consensys.net/research)
-8. [Internal Eulixir Beta Testing Results, Q4 2024](https://eulixir.vercel.app/research)
-9. [Eulixir User Study: ETL Efficiency Analysis, 2024](https://eulixir.vercel.app/research)
-10. [Vercel Infrastructure Performance Report, 2024](https://vercel.com/analytics)
-11. [Euler Finance TVL Dashboard, December 2024](https://euler.finance/analytics)
-12. [EulerSwap Gas Optimization Analysis, 2024](https://euler.xyz/research)
-13. [MEV Protection Audit by Flashbots, 2024](https://flashbots.net/research)
-14. [Yield Comparison Study: Euler vs Traditional AMMs, 2024](https://euler.finance/research)
-15. [Ethereum Foundation Innovation Spotlight, Q3 2024](https://ethereum.org/defi-innovations)
-16. [ETHGlobal DeFi Infrastructure Track Results, 2024](https://ethglobal.com/showcase)
-17. [Trail of Bits Security Audit Report, 2024](https://trailofbits.com/reports)
-18. [Time-Motion Study: DeFi Data Analysis Workflows, 2024](https://eulixir.vercel.app/research)
-19. [Eulixir Beta User IL Protection Results, Q4 2024](https://eulixir.vercel.app/research)
-20. [Automated Yield Strategy Performance Analysis, 2024](https://eulixir.vercel.app/research)
-21. [UX Study: DeFi Tool Adoption Among Non-Technical Users, 2024](https://eulixir.vercel.app/research)
-
 ## 🧙‍♂️ The Eulixir Solution: Mystical Data Alchemy
 
 Eulixir transforms this chaos into clarity through our **visual ETL laboratory**, specifically designed for **EulerSwap ecosystem users** and DeFi analysts.
@@ -609,3 +586,27 @@ Transform your DeFi data analysis from chaos to clarity. Experience the magic at
 *Built with 🧪 by alchemists, for alchemists*
 
 [![GitHub Stars](https://img.shields.io/github/stars/TechieTeee/eulixir?style=social)](https://github.com/TechieTeee/eulixir)
+
+**Sources:**
+1. [DefiLlama Analytics, December 2024](https://defillama.com)
+2. [DeFi Pulse Research Report, 2024](https://defipulse.com/research)
+3. [Chainalysis DeFi Report, 2024](https://chainalysis.com/reports)
+4. [Messari State of DeFi Q4 2024](https://messari.io/research)
+5. [Harvard Business Review: Data Scientist Survey, 2024](https://hbr.org/data-science-survey)
+6. [Nansen IL Analytics Report, 2023](https://nansen.ai/research)
+7. [ConsenSys DeFi Developer Survey, 2024](https://consensys.net/research)
+8. [Internal Eulixir Beta Testing Results, Q4 2024](https://eulixir.vercel.app/research)
+9. [Eulixir User Study: ETL Efficiency Analysis, 2024](https://eulixir.vercel.app/research)
+10. [Vercel Infrastructure Performance Report, 2024](https://vercel.com/analytics)
+11. [Euler Finance TVL Dashboard, December 2024](https://euler.finance/analytics)
+12. [EulerSwap Gas Optimization Analysis, 2024](https://euler.xyz/research)
+13. [MEV Protection Audit by Flashbots, 2024](https://flashbots.net/research)
+14. [Yield Comparison Study: Euler vs Traditional AMMs, 2024](https://euler.finance/research)
+15. [Ethereum Foundation Innovation Spotlight, Q3 2024](https://ethereum.org/defi-innovations)
+16. [ETHGlobal DeFi Infrastructure Track Results, 2024](https://ethglobal.com/showcase)
+17. [Trail of Bits Security Audit Report, 2024](https://trailofbits.com/reports)
+18. [Time-Motion Study: DeFi Data Analysis Workflows, 2024](https://eulixir.vercel.app/research)
+19. [Eulixir Beta User IL Protection Results, Q4 2024](https://eulixir.vercel.app/research)
+20. [Automated Yield Strategy Performance Analysis, 2024](https://eulixir.vercel.app/research)
+21. [UX Study: DeFi Tool Adoption Among Non-Technical Users, 2024](https://eulixir.vercel.app/research)
+
